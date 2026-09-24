@@ -28,12 +28,27 @@
   function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
 
   /* ---------------- nav ---------------- */
+  var ICONS = {
+    kitchen: '<svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" fill="#F4C430" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M2 10l10-7 10 7" fill="#C8452F" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="10" y="14" width="4" height="7" fill="#B8793F" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="15" y="4" width="3" height="4" fill="#C8452F" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    counter: '<svg viewBox="0 0 24 24"><rect x="2" y="11" width="20" height="4" fill="#B8793F" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="4" y="15" width="16" height="6" fill="#B9BDC2" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="5" y="5" width="4" height="6" fill="#5FA03C" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="10" y="7" width="4" height="4" fill="#9CCBEA" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    books: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="5" height="15" fill="#C8452F" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="8" y="3" width="5" height="17" fill="#F4C430" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="13" y="6" width="5" height="14" fill="#5FA03C" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" transform="rotate(8 15 13)"/><path d="M2 21h20" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    ticket: '<svg viewBox="0 0 24 24"><path d="M6 3h12v16l-2-2-2 2-2-2-2 2-2-2-2 2z" fill="#FFFDF6" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M9 8h6M9 11h6M9 14h4" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    chef: '<svg viewBox="0 0 24 24"><path d="M7 13c-4 0-5-6-1-7 0-4 6-5 7-2 2-3 7-2 7 2 4 1 3 7-1 7z" fill="#FFFDF6" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="7" y="13" width="10" height="7" rx="1" fill="#F4C430" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    plates: '<svg viewBox="0 0 24 24"><ellipse cx="12" cy="15" rx="10" ry="5" fill="#FFFDF6" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="12" cy="14" rx="5" ry="2.5" fill="#9CCBEA" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M3 5v6M5 5v6M4 11v8M20 5c-2 0-2 6 0 6v8" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none"/></svg>',
+    bell: '<svg viewBox="0 0 24 24"><path d="M5 16a7 7 0 0 1 14 0z" fill="#F4C430" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="3" y="16" width="18" height="3" rx="1" fill="#B8793F" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><circle cx="12" cy="8" r="1.6" fill="#4A2E1E"/></svg>',
+    dial: '<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="#FFFDF6" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 13l4-5" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M6 13h1M12 7v1M17 13h1" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><circle cx="12" cy="13" r="1.4" fill="#C8452F"/></svg>',
+    buildings: '<svg viewBox="0 0 24 24"><rect x="2" y="8" width="9" height="13" fill="#C8452F" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="13" y="5" width="9" height="16" fill="#9CCBEA" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M5 12h3M5 16h3M16 9h3M16 13h3M16 17h3" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    shop: '<svg viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="11" fill="#FFFDF6" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M2 10l2-6h16l2 6z" fill="#5FA03C" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><rect x="9" y="14" width="6" height="7" fill="#F4C430" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    star: '<svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z" fill="#F4C430" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>',
+    pencil: '<svg viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="18" rx="1" fill="#FFFDF6" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M7 8l2 2 4-4M7 14l2 2 4-4" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none"/><path d="M15 20l6-12 1 1-6 12z" fill="#C8452F" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>'
+  };
+  var NAV_ICON = { s0: "bell", s1: "counter", s2: "dial", s3: "chef", s4: "buildings", s5: "shop", s6: "star", s7: "pencil" };
   var sections = qa("section");
   function buildNav() {
     var nav = $("nav"); nav.innerHTML = "";
     sections.forEach(function (s) {
       var b = document.createElement("button");
-      b.innerHTML = '<span class="n">' + s.dataset.n + "</span>" + s.dataset.title + (store.said[s.id] ? '<span class="chk">✓</span>' : "");
+      b.innerHTML = '<span class="ic" aria-hidden="true">' + ICONS[NAV_ICON[s.id]] + '</span><span class="n">' + s.dataset.n + "</span>" + s.dataset.title + (store.said[s.id] ? '<span class="chk">✓</span>' : "");
       b.onclick = function () { show(s.id); };
       b.dataset.for = s.id;
       nav.appendChild(b);
@@ -42,6 +57,8 @@
   function show(id) {
     sections.forEach(function (s) { s.classList.toggle("on", s.id === id); });
     qa("#nav button").forEach(function (b) { b.classList.toggle("on", b.dataset.for === id); });
+    var active = document.querySelector("#nav button.on"), nav = $("nav");
+    if (active && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = active.offsetLeft - (nav.clientWidth - active.offsetWidth) / 2;
     try { history.replaceState(null, "", "#" + id); } catch (e) {}
     window.scrollTo(0, 0);
     redrawAll();
@@ -92,7 +109,7 @@
     var tip = $("tip");
     function place(el) {
       var g = GL[el.dataset.g]; if (!g) return;
-      tip.innerHTML = "<b>" + g[0] + "</b><br>" + g[1] + '<span class="kt">🍳 ' + g[2] + "</span>";
+      tip.innerHTML = "<b>" + g[0] + "</b><br>" + g[1] + '<span class="kt">In the kitchen: ' + g[2] + "</span>";
       tip.style.display = "block";
       var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
       var x = Math.min(Math.max(8, r.left), window.innerWidth - w - 8);
@@ -144,12 +161,12 @@
     var w = c.clientWidth || c.parentNode.clientWidth || 600, h = +c.getAttribute("height");
     c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); c.style.height = h + "px";
     var x = c.getContext("2d"); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, w, h);
-    x.font = "11px 'IBM Plex Mono', monospace"; x.textBaseline = "middle";
+    x.font = "14px 'Patrick Hand', sans-serif"; x.textBaseline = "middle";
     return { x: x, w: w, h: h };
   }
   function redrawAll() { Object.keys(drawers).forEach(function (k) { var s = $(k).closest("section"); if (s && s.classList.contains("on")) drawers[k](); }); }
   var rz; window.addEventListener("resize", function () { clearTimeout(rz); rz = setTimeout(redrawAll, 120); });
-  var C = { gold: "#D4A94F", acc: "#89A9CF", grn: "#57C983", red: "#E5695E", dim: "#8F94A6", line: "#2A2B36", txt: "#EDEBE4", well: "#15161C", wait: "#4A4D5C" };
+  var C = { gold: "#C98A0B", acc: "#246A9C", grn: "#3B7422", red: "#C8452F", dim: "#6E5040", line: "#E7DCC4", txt: "#3A2418", well: "#FFFDF6", wait: "#CDBFA6" };
   function logX(v, lo, hi, x0, x1) { return x0 + (Math.log(v) - Math.log(lo)) / (Math.log(hi) - Math.log(lo)) * (x1 - x0); }
 
   /* ================= STEP 0 ================= */
@@ -328,7 +345,7 @@
     // red zone
     if (S.mem.users < 512) {
       var zx = S.mem.users < 1 ? L : logX(Math.max(1, S.mem.users), 1, 512, L, R);
-      x.fillStyle = "rgba(229,105,94,.12)"; x.fillRect(zx, T, R - zx, B - T);
+      x.fillStyle = "rgba(200,69,47,.13)"; x.fillRect(zx, T, R - zx, B - T);
     }
     x.strokeStyle = C.line; x.lineWidth = 1;
     BATCH.forEach(function (b) { var px = logX(b, 1, 512, L, R); x.beginPath(); x.moveTo(px, T); x.lineTo(px, B); x.stroke(); x.fillStyle = C.dim; x.textAlign = "center"; x.fillText(b, px, B + 12); });
@@ -337,7 +354,7 @@
     // crossover
     if (S.cross > 1 && S.cross < 512) {
       var cx = logX(S.cross, 1, 512, L, R); x.strokeStyle = C.gold; x.setLineDash([5, 4]); x.beginPath(); x.moveTo(cx, T); x.lineTo(cx, B); x.stroke(); x.setLineDash([]);
-      x.fillStyle = C.gold; x.textAlign = "center"; x.fillText("compute-bound →", Math.min(cx + 50, R - 50), T + 8);
+      x.fillStyle = "#8A5A12"; x.textAlign = "center"; x.fillText("compute-bound →", Math.min(cx + 50, R - 50), T + 8);
     }
     function line(key, max, col) {
       x.strokeStyle = col; x.lineWidth = 2.2; x.beginPath();
@@ -363,7 +380,7 @@
     for (var i = 0; i < k; i++) {
       seed = (seed * 16807) % 2147483647;
       var ok = !missed && (seed / 2147483647) < a;
-      if (!ok && !missed) { missed = true; html += '<span class="tok" style="background:rgba(229,105,94,.2);color:var(--red)">✗ guess ' + (i + 1) + "</span>"; }
+      if (!ok && !missed) { missed = true; html += '<span class="tok" style="background:rgba(229,105,94,.2);color:var(--brick)">✗ guess ' + (i + 1) + "</span>"; }
       else if (missed) html += '<span class="tok" style="opacity:.35">guess ' + (i + 1) + "</span>";
       else html += '<span class="tok out">✓ guess ' + (i + 1) + "</span>";
     }
@@ -437,27 +454,28 @@
   function s3draw() {
     var r = s3.result; if (!r) return;
     var c = ctxFor("s3gantt"), x = c.x, W = c.w, H = c.h;
-    var win = 12000, span = 22000, L = 34, R = W - 8, T = 6, B = H - 18;
+    var win = 12000, span = 22000, L = 16, R = W - 22, T = 6, B = H - 20;
     var rows = r.requests.filter(function (q) { return q.arrival <= win; });
     var rh = Math.max(1.5, Math.min(8, (B - T) / Math.max(1, rows.length)));
     function X(t) { return L + t / span * (R - L); }
     x.fillStyle = C.dim; x.textAlign = "center";
-    for (var s = 0; s <= 22; s += 2) { var px = X(s * 1000); x.strokeStyle = C.line; x.beginPath(); x.moveTo(px, T); x.lineTo(px, B); x.stroke(); x.fillText(s + "s", px, H - 7); }
+    for (var s = 0; s <= 20; s += 4) { var px = X(s * 1000); x.strokeStyle = C.line; x.beginPath(); x.moveTo(px, T); x.lineTo(px, B); x.stroke(); x.fillText(s + "s", px, H - 7); }
     rows.forEach(function (q, i) {
       var y = T + i * rh, h = Math.max(1, rh - 0.6);
       var admit = q.admit != null ? q.admit : (q.tokenTimes[0] || q.arrival);
       var first = q.tokenTimes[0], fin = q.finish;
-      x.fillStyle = C.wait; x.fillRect(X(q.arrival), y, Math.max(1, X(Math.min(admit, span)) - X(q.arrival)), h);
+      function bar(a, b, col) { var w = Math.max(1.5, X(Math.min(b, span)) - X(a)); x.fillStyle = col; x.fillRect(X(a), y, w, h); if (h >= 3) { x.strokeStyle = "rgba(74,46,30,.55)"; x.lineWidth = .6; x.strokeRect(X(a), y, w, h); } }
+      bar(q.arrival, admit, "#DDBB8A");
       if (first != null) {
-        x.fillStyle = C.gold; x.fillRect(X(admit), y, Math.max(1.5, X(Math.min(first, span)) - X(admit)), h);
-        if (fin != null) { x.fillStyle = C.acc; x.fillRect(X(first), y, Math.max(1, X(Math.min(fin, span)) - X(first)), h); }
-      } else { x.fillStyle = C.wait; x.fillRect(X(q.arrival), y, R - X(q.arrival), h); }
-      if (q.giant) { x.strokeStyle = C.red; x.lineWidth = 1.5; x.strokeRect(X(q.arrival), y, Math.max(3, X(Math.min(fin || span, span)) - X(q.arrival)), h); }
+        bar(admit, first, "#F4C430");
+        if (fin != null) bar(first, fin, "#9CCBEA");
+      } else bar(q.arrival, span, "#DDBB8A");
+      if (q.giant) { x.strokeStyle = C.red; x.lineWidth = 2.2; x.strokeRect(X(q.arrival), y, Math.max(3, X(Math.min(fin || span, span)) - X(q.arrival)), h); }
     });
   }
   function s3drawItl() {
     var r = s3.result; if (!r) return;
-    var c = ctxFor("s3itlc"), x = c.x, W = c.w, H = c.h, L = 40, R = W - 8, T = 8, B = H - 16;
+    var c = ctxFor("s3itlc"), x = c.x, W = c.w, H = c.h, L = 58, R = W - 24, T = 8, B = H - 18;
     var tMax = 70000, yMax = 400;
     function Y(v) { return B - Math.min(v, yMax) / yMax * (B - T); }
     x.strokeStyle = C.line; [100, 200, 300, 400].forEach(function (v) { x.beginPath(); x.moveTo(L, Y(v)); x.lineTo(R, Y(v)); x.stroke(); x.fillStyle = C.dim; x.textAlign = "right"; x.fillText(v + "ms", L - 4, Y(v)); });
@@ -470,7 +488,7 @@
       x.beginPath(); x.moveTo(px, B); x.lineTo(px, Y(it.dur)); x.stroke();
     });
     r.iterLog.forEach(function (it) { if (it.dur > yMax && it.t <= tMax) { x.fillStyle = C.red; x.beginPath(); x.arc(L + it.t / tMax * (R - L), T + 3, 3, 0, 7); x.fill(); } });
-    x.fillStyle = C.dim; x.textAlign = "center"; for (var s = 0; s <= 70; s += 10) x.fillText(s + "s", L + s * 1000 / tMax * (R - L), H - 5);
+    x.fillStyle = C.dim; x.textAlign = "center"; for (var s = 0; s <= 60; s += 10) x.fillText(s + "s", L + s * 1000 / tMax * (R - L), H - 5);
   }
   drawers.s3gantt = s3draw; drawers.s3itlc = s3drawItl;
   var ENGINE = [
@@ -556,7 +574,7 @@
         else if (r.strat === "ep") { var pe = r.m.moe.experts / r.n; what = "experts " + (gi * pe) + "–" + ((gi + 1) * pe - 1) + " + attention copy"; }
         else { var pe2 = r.m.moe.experts / r.n; what = "1/8 attention + experts " + (gi * pe2) + "–" + ((gi + 1) * pe2 - 1); }
         var pct = Math.min(100, r.perGpu / r.g.hbmGB * 100);
-        html += '<div class="gpucell' + (r.fits ? "" : " bad") + '"><div>GPU ' + (gi + 1) + '</div><div class="fill"><i style="width:' + pct + '%;background:' + (r.fits ? "var(--gold)" : "var(--red)") + '"></i></div><div class="what">' + what + "</div></div>";
+        html += '<div class="gpucell' + (r.fits ? "" : " bad") + '"><div>GPU ' + (gi + 1) + '</div><div class="fill"><i style="width:' + pct + '%;background:' + (r.fits ? "var(--yellow)" : "var(--brick)") + '"></i></div><div class="what">' + what + "</div></div>";
       }
       html += "</div></div>";
     }
@@ -797,7 +815,7 @@
     $("cpbrieftxt").innerHTML = BRIEFS[cp.brief].text;
     $("cpsame").closest("label").style.display = BRIEFS[cp.brief].voice ? "" : "none";
     var best = store.briefs[cp.brief];
-    $("cpchecks").innerHTML = '<p class="muted">Configure the kitchen, then submit.' + (best != null ? " Your best so far: " + best + "." : "") + "</p>";
+    $("cpchecks").innerHTML = '<div class="idle">' + ICONS.chef.replace("<svg ", '<svg aria-hidden="true" ') + '<b>The pass is empty</b>Set up the kitchen on the left, then submit. The head chef grades your plan on three questions: does it fit, is it fast, is it affordable?' + (best != null ? "<br>Your best so far on this brief: " + best + "." : "") + "</div>";
     $("cpstars").textContent = "☆☆☆☆☆"; $("cpscore").textContent = "";
   }
   function cpSubmit() {
@@ -825,19 +843,19 @@
 
   /* ================= FIELD TEST ================= */
   var FT = [
-    { q: "Step 1: a 70B model, FP8 weights and FP8 tickets, 8K context, on <b>one H100</b>, with the 10% reserve <b>off</b>. How many diners fit?", a: function () { return IK.memory({ gpu: "h100-sxm", n: 1, model: "70b", wPrec: "fp8", kvPrec: "fp8", ctx: 8192 }).users; }, tol: 0 },
-    { q: "Step 1: the same setup (reserve off) on <b>one B200</b>. How many diners fit?", a: function () { return IK.memory({ gpu: "b200-sxm", n: 1, model: "70b", wPrec: "fp8", kvPrec: "fp8", ctx: 8192 }).users; }, tol: 0 },
-    { q: "Step 1: the 671B DeepSeek-shaped MoE, FP8/FP8, 8K context, reserve off, on <b>8×B200</b>. How many diners fit? (within 2%)", a: function () { return IK.memory({ gpu: "b200-sxm", n: 8, model: "dsv3", wPrec: "fp8", kvPrec: "fp8", ctx: 8192 }).users; }, tol: 0.02 },
-    { q: "Step 2: 70B at FP8 on H100. At roughly what batch size does decode turn compute-bound? (within 10%)", a: function () { return IK.crossoverBatch({ gpu: "h100-sxm", model: "70b", wPrec: "fp8" }); }, tol: 0.1 },
-    { q: "Step 2: speculative decoding with α = 70%, k = 3, sous-chef cost 5%. What's the speedup? (e.g. 1.85)", a: function () { return IK.specDecode(0.7, 3, 0.05).speedup; }, tol: 0.025 },
-    { q: "Step 5a: 4 GPUs at $3.00/hr, 5,000 tok/s when busy, API at $1.20/M. Break-even utilization, in %?", a: function () { return IK.breakevenUtil(3, 4, 5000, 1.2) * 100; }, tol: 0.02 },
-    { q: "Step 5b: Tryon vs the <b>standard</b> tier with a <b>full</b> engineer. Break-even labels per day? (within 2%)", a: function () { return IK.tryonBreakevenPerDay(IK.TRYON.standard, IK.TRYON.fullEng); }, tol: 0.02 },
+    { ph: "e.g. 12", q: "Step 1: a 70B model, FP8 weights and FP8 tickets, 8K context, on <b>one H100</b>, with the 10% reserve <b>off</b>. How many diners fit?", a: function () { return IK.memory({ gpu: "h100-sxm", n: 1, model: "70b", wPrec: "fp8", kvPrec: "fp8", ctx: 8192 }).users; }, tol: 0 },
+    { ph: "e.g. 40", q: "Step 1: the same setup (reserve off) on <b>one B200</b>. How many diners fit?", a: function () { return IK.memory({ gpu: "b200-sxm", n: 1, model: "70b", wPrec: "fp8", kvPrec: "fp8", ctx: 8192 }).users; }, tol: 0 },
+    { ph: "e.g. 1500", q: "Step 1: the 671B DeepSeek-shaped MoE, FP8/FP8, 8K context, reserve off, on <b>8×B200</b>. How many diners fit? (within 2%)", a: function () { return IK.memory({ gpu: "b200-sxm", n: 8, model: "dsv3", wPrec: "fp8", kvPrec: "fp8", ctx: 8192 }).users; }, tol: 0.02 },
+    { ph: "e.g. 120", q: "Step 2: 70B at FP8 on H100. At roughly what batch size does decode turn compute-bound? (within 10%)", a: function () { return IK.crossoverBatch({ gpu: "h100-sxm", model: "70b", wPrec: "fp8" }); }, tol: 0.1 },
+    { ph: "e.g. 1.85", q: "Step 2: speculative decoding with α = 70%, k = 3, sous-chef cost 5%. What's the speedup? (e.g. 1.85)", a: function () { return IK.specDecode(0.7, 3, 0.05).speedup; }, tol: 0.025 },
+    { ph: "% e.g. 48", q: "Step 5a: 4 GPUs at $3.00/hr, 5,000 tok/s when busy, API at $1.20/M. Break-even utilization, in %?", a: function () { return IK.breakevenUtil(3, 4, 5000, 1.2) * 100; }, tol: 0.02 },
+    { ph: "e.g. 900K", q: "Step 5b: Tryon vs the <b>standard</b> tier with a <b>full</b> engineer. Break-even labels per day? (within 2%)", a: function () { return IK.tryonBreakevenPerDay(IK.TRYON.standard, IK.TRYON.fullEng); }, tol: 0.02 },
     { q: "Step 3: start from continuous batching with giant prompts on. Which single switch gives the highest <b>goodput</b>?", choice: ["Static batches", "Chunked prefill", "Disaggregation", "Prefix caching"], right: 2 }
   ];
   function initFT() {
     $("ftq").innerHTML = FT.map(function (f, i) {
-      var input = f.choice ? '<select id="ft' + i + '" style="background:var(--well);color:var(--txt);border:1px solid var(--line);padding:7px;border-radius:3px;font:13px var(--sans)"><option value="">choose…</option>' + f.choice.map(function (c, j) { return '<option value="' + j + '">' + c + "</option>"; }).join("") + "</select>"
-        : '<input type="text" inputmode="decimal" id="ft' + i + '" aria-label="Answer ' + (i + 1) + '" placeholder="e.g. 1.2M">';
+      var input = f.choice ? '<select id="ft' + i + '"><option value="">choose…</option>' + f.choice.map(function (c, j) { return '<option value="' + j + '">' + c + "</option>"; }).join("") + "</select>"
+        : '<input type="text" inputmode="decimal" id="ft' + i + '" aria-label="Answer ' + (i + 1) + '" placeholder="' + (f.ph || "") + '">';
       return '<div class="fq"><div class="fqt"><span class="num">' + (i + 1) + ".</span> " + f.q + "</div>" + input + '<span class="res" id="ftr' + i + '"></span></div>';
     }).join("");
     FT.forEach(function (f, i) { if (store.ft[i] != null) $("ft" + i).value = store.ft[i]; });
@@ -865,7 +883,7 @@
       var tip = $("tip");
       function place() {
         var g = GL[el.dataset.g]; if (!g) return;
-        tip.innerHTML = "<b>" + g[0] + "</b><br>" + g[1] + '<span class="kt">🍳 ' + g[2] + "</span>"; tip.style.display = "block";
+        tip.innerHTML = "<b>" + g[0] + "</b><br>" + g[1] + '<span class="kt">In the kitchen: ' + g[2] + "</span>"; tip.style.display = "block";
         var r = el.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
         tip.style.left = Math.min(Math.max(8, r.left), window.innerWidth - w - 8) + "px";
         var y = r.bottom + 8; if (y + h > window.innerHeight - 8) y = r.top - h - 8; tip.style.top = Math.max(8, y) + "px";
@@ -877,7 +895,14 @@
     });
   }
 
+  function renderArt() {
+    var A = window.IK_ART || {};
+    qa(".scene[data-art]").forEach(function (el) { var svg = A[el.dataset.art]; if (svg && !el.firstChild) el.innerHTML = svg; });
+  }
+
   /* ---------------- boot ---------------- */
+  renderArt();
+  qa(".kmap .k[data-i]").forEach(function (el) { el.innerHTML = ICONS[el.dataset.i] || ""; });
   buildNav();
   initTips();
   qa(".g").forEach(function (el) { el.dataset.bound = "1"; });

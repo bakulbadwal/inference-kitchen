@@ -2,7 +2,9 @@
 
 **A hands-on lab for how AI models actually get served.** Drag sliders, flip switches, and break a GPU kitchen on purpose: memory, batching, the scheduler, splitting big models, and the economics of running your own GPUs.
 
-![The scheduler sandbox](docs/scheduler.png)
+**Play it: https://bakulbadwal.github.io/inference-kitchen/**
+
+![Inference Kitchen: a Busytown-style cutaway of the scheduler step](docs/hero.png)
 
 Every chatbot reply is cooked in a GPU kitchen. The **GPU** is the kitchen, its memory (**HBM**) is the counter, the model's **weights** are the recipe books that must stay on the counter, each user's **KV cache** is their order ticket, and the **inference engine** is the head chef deciding who gets cooked for next. Hold that picture and the rest follows.
 
@@ -21,9 +23,11 @@ Every chatbot reply is cooked in a GPU kitchen. The **GPU** is the kitchen, its 
 
 Each step has predict-then-reveal questions and a "say it out loud" line that unlocks once you've played. Every term has a tooltip with its plain meaning and its kitchen equivalent.
 
+![The scheduler sandbox: requests as a Gantt timeline with live latency, throughput and goodput](docs/scheduler.png)
+
 ## Run it
 
-Open `index.html` in a browser. There's no build step, no dependencies, and nothing to install.
+Play it live at the link above, or open `index.html` in a browser. There's no build step, no dependencies, and nothing to install.
 
 ## What's exact and what's a model
 
@@ -54,6 +58,8 @@ GPU specs (A100, H100, H200, B200) come from the audited [Hyperscale Ledger](htt
 | `js/app.js` | Wires controls to the math and draws the charts |
 | `js/gpus.js` | GPU specs generated from the Hyperscale Ledger |
 | `js/glossary.js` | Tooltip definitions |
+| `js/art/s0–s6.js` | The seven hand-built SVG cutaway scenes, inlined so they use the page's fonts |
+| `PRODUCT.md`, `DESIGN.md` | Product brief and the recorded design system |
 
 Built by [Bakul Badwal](https://github.com/bakulbadwal) (UVA Darden MBA '27) with Claude Code, as an interactive companion to a field guide on the a16z Academy's *AI Inference Engineering* course.
 

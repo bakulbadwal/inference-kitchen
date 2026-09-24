@@ -5,17 +5,27 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Inference Kitchen</title>
 <meta name="description" content="A hands-on lab for how AI models are served: GPU memory, batching, the scheduler, splitting big models, and the economics of running your own GPUs.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M16 40c-9 0-12-14-2-17 1-10 14-13 18-5 4-8 17-5 18 5 10 3 7 17-2 17z' fill='%23FFFDF6' stroke='%234A2E1E' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='18' y='40' width='28' height='14' rx='3' fill='%23F4C430' stroke='%234A2E1E' stroke-width='4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Grandstander:wght@700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<!--
+THESIS: Serving an AI model is a busy kitchen, drawn as a Busytown cutaway where every worker and object wears its label. It refuses the dark AI-dashboard look and the corporate SaaS template.
+OWN-WORLD: flat gouache on paper (#FBF7EC); warm-brown outlines (#4A2E1E); school-bus yellow, brick red, grass green, sky blue, lilac and sand as whole fields; Grandstander signboards, Patrick Hand labels, Andika body; painted-sign buttons, price-tag readouts, sticky-note predictions, chalkboard takeaways.
+STORY: meet the kitchen, then work its counter, dial, pass, buildings and street until you can run it for three clients.
+FIRST VIEWPORT: brick "Inference Kitchen" signboard left, headline right, painted step signs, then step 0's cutaway scene of the order window across the full width.
+FORM: Cutaway Kitchen (Busytown cross-section spread), user-pinned over the roll; staging: one cutaway per step; seed key f64836a1.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="gouache" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="3" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="1.3" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
 <div class="wrap">
 <header>
-  <div class="eyebrow">Inference Kitchen · a hands-on lab</div>
-  <h1>How an AI model actually gets served</h1>
-  <p class="sub">Every chatbot reply is cooked in a GPU kitchen. Drag the sliders, flip the switches, and break things on purpose. The field guide and Kiely's <i>Inference Engineering</i> in about 90 minutes of play, with no reading required.</p>
+  <div class="mast"><b>Inference Kitchen</b><span>a hands-on lab</span></div>
+  <div><h1>How an AI model actually gets served</h1>
+  <p class="sub">Every chatbot reply is cooked in a GPU kitchen. Drag the sliders, flip the switches, and break things on purpose. The field guide and Kiely's <i>Inference Engineering</i> in about 90 minutes of play, with no reading required.</p></div>
 </header>
 
 <nav id="nav" aria-label="Steps"></nav>
@@ -23,15 +33,16 @@
 <!-- ============ STEP 0 ============ -->
 <section id="s0" data-title="Hit Enter" data-n="0">
   <div class="card">
+    <div class="scene" data-art="s0"></div>
     <h2>0 · What happens when you hit Enter</h2>
-    <p class="lede">A GPU is a <b>kitchen</b>. Before anything else, meet the cast. Every term on this site has a dotted underline; hover or tap it for the plain-English meaning and its kitchen equivalent.</p>
+    <p class="lede">A GPU is a <b>kitchen</b>. Before anything else, meet the cast. Every term with a wavy red underline is tappable: hover or tap it for the plain-English meaning and its kitchen equivalent.</p>
     <div class="kmap">
-      <div><span class="k">🏭</span><b>GPU</b> = the kitchen<br><span class="t">where the cooking happens</span></div>
-      <div><span class="k">🧱</span><b><span class="g" data-g="hbm">HBM</span></b> = counter space<br><span class="t">fast memory right next to the stove: small, precious</span></div>
-      <div><span class="k">📚</span><b><span class="g" data-g="weights">Weights</span></b> = recipe books<br><span class="t">must stay on the counter the whole time</span></div>
-      <div><span class="k">🎫</span><b><span class="g" data-g="kv">KV cache</span></b> = order tickets<br><span class="t">one per diner, growing as the conversation goes</span></div>
-      <div><span class="k">👨‍🍳</span><b>Inference engine</b> = head chef<br><span class="t">decides who gets cooked for next</span></div>
-      <div><span class="k">🍽️</span><b><span class="g" data-g="batch">Batch</span></b> = a table served together<br><span class="t">one trip to the books, many plates</span></div>
+      <div><span class="k" data-i="kitchen" aria-hidden="true"></span><b>GPU</b> = the kitchen<br><span class="t">where the cooking happens</span></div>
+      <div><span class="k" data-i="counter" aria-hidden="true"></span><b><span class="g" data-g="hbm">HBM</span></b> = counter space<br><span class="t">fast memory right next to the stove: small, precious</span></div>
+      <div><span class="k" data-i="books" aria-hidden="true"></span><b><span class="g" data-g="weights">Weights</span></b> = recipe books<br><span class="t">must stay on the counter the whole time</span></div>
+      <div><span class="k" data-i="ticket" aria-hidden="true"></span><b><span class="g" data-g="kv">KV cache</span></b> = order tickets<br><span class="t">one per diner, growing as the conversation goes</span></div>
+      <div><span class="k" data-i="chef" aria-hidden="true"></span><b>Inference engine</b> = head chef<br><span class="t">decides who gets cooked for next</span></div>
+      <div><span class="k" data-i="plates" aria-hidden="true"></span><b><span class="g" data-g="batch">Batch</span></b> = a table served together<br><span class="t">one trip to the books, many plates</span></div>
     </div>
     <p class="covers">Covers <b>Field guide §0–§1</b> · <b>Kiely ch.1–2</b> · the same ground as your "How a Call Runs" one-pager, but moving</p>
   </div>
@@ -39,14 +50,14 @@
   <div class="card">
     <h3>Send one request and watch it cook</h3>
     <div class="row"><input type="text" class="wide" id="s0prompt" value="Explain why the sky is blue in one sentence." aria-label="Prompt" style="flex:1;min-width:200px"><button class="act" id="s0go">Hit Enter ⏎</button></div>
-    <div class="row" style="margin-top:8px"><span class="phase" id="s0phase">waiting…</span><span class="muted" id="s0clock" style="font:12px var(--mono)"></span></div>
+    <div class="row" style="margin-top:8px"><span class="phase" id="s0phase">waiting…</span><span class="muted" id="s0clock" style="font:15px var(--hand)"></span></div>
     <div class="lbl">Your prompt, as <span class="g" data-g="token">tokens</span> (<span class="g" data-g="prefill">prefill</span> reads them all at once)</div>
     <div class="toks" id="s0in"></div>
     <div class="lbl">The answer (<span class="g" data-g="decode">decode</span> writes one token per trip to the recipe books)</div>
     <div class="toks" id="s0out"></div>
     <div class="meters">
-      <div class="meter"><div class="ml"><span>Stove busy (compute)</span><span id="s0cv">0%</span></div><div class="mb"><i id="s0cb" style="background:var(--gold)"></i></div></div>
-      <div class="meter"><div class="ml"><span>Hauling recipe books (memory)</span><span id="s0mv">0%</span></div><div class="mb"><i id="s0mb" style="background:var(--acc)"></i></div></div>
+      <div class="meter"><div class="ml"><span>Stove busy (compute)</span><span id="s0cv">0%</span></div><div class="mb"><i id="s0cb" style="background:var(--yellow)"></i></div></div>
+      <div class="meter"><div class="ml"><span>Hauling recipe books (memory)</span><span id="s0mv">0%</span></div><div class="mb"><i id="s0mb" style="background:var(--sky)"></i></div></div>
     </div>
     <div class="grid g3" style="margin-top:12px">
       <div class="stat"><div class="v gold" id="s0gb">0</div><div class="l">GB of recipe book read so far</div></div>
@@ -72,7 +83,7 @@
       </div>
     </div>
     <div class="predict" data-p="s0a">
-      <div class="tag">Predict first</div>
+      <div class="tag">Guess first!</div>
       <div class="q">Your prompt is 500 tokens and the answer is 500 tokens. Which half takes longer?</div>
       <div class="opts"><button data-a="0">Reading the prompt</button><button data-a="1" data-right>Writing the answer</button><button data-a="2">About the same</button></div>
       <div class="why">Writing takes far longer. The 500 prompt tokens go through in <b>one</b> parallel pass. The 500 answer tokens need <b>500</b> separate trips to re-read every weight, because each word depends on the one before it. That's why most closed-model APIs charge <b>several times more for output tokens</b> than input tokens (typically 3–8×; many open-model hosts charge the same for both).</div>
@@ -87,6 +98,7 @@
 <!-- ============ STEP 1 ============ -->
 <section id="s1" data-title="The Counter" data-n="1">
   <div class="card">
+    <div class="scene" data-art="s1"></div>
     <h2>1 · The counter: memory decides the hardware</h2>
     <p class="lede">The recipe books (weights) must fit on the counter (<span class="g" data-g="hbm">HBM</span>) <i>before a single diner is seated</i>. Whatever space is left holds order tickets (<span class="g" data-g="kv">KV cache</span>), one per diner, and each grows with the conversation's length. Drag the diners up until the counter overflows.</p>
     <p class="covers">Covers <b>Field guide §9(a)(b), §4.1</b> · <b>Kiely ch.3, ch.5</b> · GPU specs from your <b>Hyperscale Ledger</b></p>
@@ -105,7 +117,7 @@
       </div>
       <div>
         <div class="counter" id="s1bar" role="img" aria-label="GPU memory use"></div>
-        <div class="legend"><span><i style="background:var(--gold)"></i>recipe books (weights)</span><span><i style="background:var(--acc)"></i>order tickets (KV cache)</span><span><i style="background:var(--red)"></i>overflow = out of memory</span></div>
+        <div class="legend"><span><i style="background:var(--yellow)"></i>recipe books (weights)</span><span><i style="background:var(--sky)"></i>order tickets (KV cache)</span><span><i style="background:var(--brick)"></i>overflow = out of memory</span></div>
         <div class="grid g4" style="margin-top:12px">
           <div class="stat"><div class="v gold" id="s1w"></div><div class="l">weights</div></div>
           <div class="stat"><div class="v acc" id="s1pu"></div><div class="l">one ticket at this length</div></div>
@@ -117,13 +129,13 @@
       </div>
     </div>
     <div class="predict" data-p="s1a">
-      <div class="tag">Predict first</div>
+      <div class="tag">Guess first!</div>
       <div class="q">A 70B model at FP8 on one H200 seats 52 diners at 8K context. Double the context to 16K. How many fit now?</div>
       <div class="opts"><button data-a="0">104</button><button data-a="1">52</button><button data-a="2" data-right>26</button></div>
       <div class="why">26. Each ticket doubles in size, so half as many fit. <b>Context length is a cost multiplier</b>, and that's why long-context tiers cost more. Set it up above and check.</div>
     </div>
     <div class="predict" data-p="s1b">
-      <div class="tag">Predict first</div>
+      <div class="tag">Guess first!</div>
       <div class="q">DeepSeek-V3 has 671B parameters but only 37B are "active" per token. At FP8, does it fit on one B200 (180 GB)?</div>
       <div class="opts"><button data-a="0">Yes: only 37 GB is active</button><button data-a="1" data-right>No</button></div>
       <div class="why">No. <b>Every expert has to sit on the counter</b>, even the ones a given token doesn't use: 671 GB. MoE saves compute, not memory. Pick DeepSeek and 1×B200 above to watch it overflow, then try 8×B200. The small tickets you'll see there come from DeepSeek's compressed attention (<span class="g" data-g="mla">MLA</span>), a separate trick.</div>
@@ -138,6 +150,7 @@
 <!-- ============ STEP 2 ============ -->
 <section id="s2" data-title="The Batch Dial" data-n="2">
   <div class="card">
+    <div class="scene" data-art="s2"></div>
     <h2>2 · The batch dial: one trip, many plates</h2>
     <p class="lede">Each decode step hauls every recipe book across the kitchen once. Serve one diner per trip and the stove sits idle. Serve a whole table on the same trip and each extra plate is nearly free. Turn the dial and watch <b>your</b> speed against the <b>kitchen's</b> total.</p>
     <p class="covers">Covers <b>Field guide §0, §3.2</b> · <b>Kiely ch.2 (arithmetic intensity), ch.5</b> · roofline cross-checked against DeepMind's <i>How to Scale Your Model</i></p>
@@ -166,7 +179,7 @@
       </div>
     </div>
     <div class="predict" data-p="s2a">
-      <div class="tag">Predict first</div>
+      <div class="tag">Guess first!</div>
       <div class="q">70B at FP8 on 2×H100. Go from 1 diner per trip to 64. What happens to <i>your</i> speed?</div>
       <div class="opts"><button data-a="0">Drops to ~1/64th</button><button data-a="1" data-right>Drops a bit (by about a third)</button><button data-a="2">Goes up</button></div>
       <div class="why">It drops only by about a third (66 → 42 tok/s at 4K context), nowhere near 1/64th, because decode is <span class="g" data-g="membound">memory-bound</span>. The expensive part is hauling 70 GB of books, and that happens <b>once per trip</b> however many plates ride along. The drop you do see is the <b>tickets</b>: each diner's 4K-token KV cache has to be read too (43 GB at 64 diners). That's why long contexts make batching less of a free lunch. Meanwhile the kitchen's total goes up <b>~40×</b>, which is <b>why per-token prices collapsed</b>. Drop the context to 1K and your speed falls only ~13%.</div>
@@ -193,7 +206,7 @@
       </div>
     </div>
     <div class="predict" data-p="s2b">
-      <div class="tag">Predict first</div>
+      <div class="tag">Guess first!</div>
       <div class="q">Guesses are right only half the time (α = 0.5). Is guessing 8 words per trip better than guessing 2?</div>
       <div class="opts"><button data-a="0">Yes, more guesses, more speed</button><button data-a="1" data-right>No, 2 is better</button></div>
       <div class="why">2 wins (1.59× vs 1.43×). With a 50% hit rate the chain almost always breaks early, so long guesses mostly waste the sous-chef's time. Engines tune <i>k</i> to the acceptance rate they actually see, which is why benchmark <b>content</b> matters (Kiely ch.5).</div>
@@ -208,6 +221,7 @@
 <!-- ============ STEP 3 ============ -->
 <section id="s3" data-title="The Head Chef" data-n="3">
   <div class="card">
+    <div class="scene" data-art="s3"></div>
     <h2>3 · The head chef: the scheduler sandbox</h2>
     <p class="lede">Now run a real dinner service. Requests arrive all minute: mostly short, a few huge. The <span class="g" data-g="engine">inference engine</span> is the head chef deciding, every few milliseconds, who is on the counter and who gets the next trip. Flip one switch at a time and watch who waits.</p>
     <p class="covers">Covers <b>Field guide §1–§3, §5</b> · <b>Kiely ch.4–5</b> · the core idea: <i>an inference engine is a scheduler for GPU memory</i></p>
@@ -234,20 +248,20 @@
           <div class="stat"><div class="v" id="s3good"></div><div class="l"><span class="g" data-g="goodput">goodput</span> · met SLO</div></div>
         </div>
         <canvas id="s3gantt" height="300" style="margin-top:12px" aria-label="Timeline of requests"></canvas>
-        <div class="chartcap">First 20 seconds of service, one row per diner: <span style="color:#6E7282">■ waiting</span> · <span style="color:var(--gold)">■ prefill</span> · <span style="color:var(--acc)">■ decoding</span> · red outline = a giant order</div>
+        <div class="chartcap">First 20 seconds of service, one row per diner: <i class="sw" style="background:#DDBB8A"></i>waiting · <i class="sw" style="background:#F4C430"></i>prefill · <i class="sw" style="background:#9CCBEA"></i>decoding · red outline = a giant order</div>
         <canvas id="s3itlc" height="120" style="margin-top:10px" aria-label="Time between tokens over the service"></canvas>
         <div class="chartcap">Time between words for everyone, across the minute. Dashed line = the 100 ms "feels smooth" <span class="g" data-g="slo">SLO</span>. Spikes are stalls.</div>
         <div id="s3notes"></div>
       </div>
     </div>
     <div class="predict" data-p="s3a">
-      <div class="tag">Predict first</div>
+      <div class="tag">Guess first!</div>
       <div class="q">Switch on giant orders (2% of requests are 60K-token prompts). What happens to everyone <i>else</i>?</div>
       <div class="opts"><button data-a="0">Nothing, they're separate requests</button><button data-a="1" data-right>Everyone's words freeze for seconds at a time</button><button data-a="2">Only the giant order is slow</button></div>
       <div class="why">Everyone freezes. Without chunking, a 60K-token prefill runs <b>inside</b> one scheduler step, about 2.4 seconds during which nobody gets a word. Watch the spikes in the lower chart, then try <b>chunked prefill</b> (it spreads the giant out; watch the chunk-size tradeoff) and then <b>disaggregation</b> (the giant gets its own kitchen).</div>
     </div>
     <div class="predict" data-p="s3b">
-      <div class="tag">Predict first</div>
+      <div class="tag">Guess first!</div>
       <div class="q">Push arrivals from 6 to 15 per second. Throughput goes up. What happens to goodput?</div>
       <div class="opts"><button data-a="0">Goes up too</button><button data-a="1" data-right>Collapses</button></div>
       <div class="why">It collapses. The kitchen serves more tokens, but almost nobody gets them fast enough to meet the SLO. That's why serving research (DistServe) and the field guide judge engines on <b>goodput at your SLO</b>, not raw throughput: a benchmark that only reports tokens/sec can look great while every user is miserable.</div>
@@ -267,6 +281,7 @@
 <!-- ============ STEP 4 ============ -->
 <section id="s4" data-title="Big Kitchens" data-n="4">
   <div class="card">
+    <div class="scene" data-art="s4"></div>
     <h2>4 · Big kitchens: splitting a model across GPUs</h2>
     <p class="lede">When the recipe books don't fit on one counter, you split them across several kitchens. There are three ways to cut them, and each costs a different amount of shouting between kitchens. Inside one building the hallway is fast (<span class="g" data-g="nvlink">NVLink</span>). Between buildings it's much slower (<span class="g" data-g="ib">InfiniBand</span>).</p>
     <p class="covers">Covers <b>Field guide §4</b> · <b>Kiely ch.5</b> (parallelism) · cross-check: DeepMind scaling book, "Sharding" and "Inference" chapters</p>
@@ -306,7 +321,7 @@
       </div>
     </div>
     <div class="predict" data-p="s4a">
-      <div class="tag">Predict first</div>
+      <div class="tag">Guess first!</div>
       <div class="q">DeepSeek-V3 sends each token to 8 of its 256 experts. With 64 users decoding together, roughly what share of experts gets read each step?</div>
       <div class="opts"><button data-a="0">3% (8 of 256)</button><button data-a="1">25%</button><button data-a="2" data-right>~87%</button></div>
       <div class="why">About 87%. Each token picks different experts, and 64 tokens × 8 picks cover almost the whole kitchen. That's the book's key MoE point: the efficiency on the model card is a <b>single-request</b> property. On a busy server you need <b>expert parallelism</b> spread over many GPUs to keep each GPU's slice small.</div>
@@ -321,6 +336,7 @@
 <!-- ============ STEP 5 ============ -->
 <section id="s5" data-title="The Business" data-n="5">
   <div class="card">
+    <div class="scene" data-art="s5"></div>
     <h2>5 · Run it as a business</h2>
     <p class="lede">Your <a href="https://aistacked.netlify.app/" target="_blank" rel="noopener">AI Stack atlas</a> has the <b>personal</b> version of this (the Token Meter: should <i>you</i> pay per token or buy a Mac?). This is the <b>company</b> version: should a company rent its own GPU fleet, and what does it take to run one?</p>
     <p class="covers">Covers <b>Field guide §6, §8, §9(c)</b> · <b>Kiely ch.1, ch.7</b> · <b>Darden GBUS 8496 Class 10</b> (Tryon, "Own the Weights")</p>
@@ -347,13 +363,13 @@
           <div class="stat"><div class="v" id="s5verdict"></div><div class="l">verdict</div></div>
         </div>
         <canvas id="s5chart" height="220" style="margin-top:12px" aria-label="Cost per million tokens versus utilization"></canvas>
-        <div class="chartcap">Gold curve = your cost per million tokens at each utilization · blue line = the API · where they cross = break-even · white dot = you</div>
+        <div class="chartcap">Gold curve = your cost per million tokens at each utilization · blue line = the API · where they cross = break-even · brown dot = you</div>
         <canvas id="s5day" height="90" style="margin-top:10px" aria-label="Traffic over a day"></canvas>
         <div class="chartcap">Your demand across 24 hours. You pay for the peak all day long.</div>
       </div>
     </div>
     <div class="predict" data-p="s5a">
-      <div class="tag">Predict first</div>
+      <div class="tag">Guess first!</div>
       <div class="q">The field-guide kitchen (2×H100, $2.50/hr, 2,500 tok/s) serves business-hours traffic. Is it cheaper than a $0.90/M API?</div>
       <div class="opts"><button data-a="0">Yes, $0.56/M beats $0.90/M</button><button data-a="1" data-right>No</button></div>
       <div class="why">No. $0.56/M is only true at 100% utilization. Business-hours traffic keeps you at about <b>45%</b>, which makes it <b>~$1.23/M</b>. Break-even is <b>62%</b>. Now switch on pooling: a platform with many customers across time zones flattens the curve. That's the Baseten/Together business model in one switch.</div>
@@ -423,6 +439,7 @@
 <!-- ============ CAPSTONE ============ -->
 <section id="s6" data-title="Capstone" data-n="★">
   <div class="card">
+    <div class="scene" data-art="s6"></div>
     <h2>★ · You're the inference lead</h2>
     <p class="lede">Three clients, three briefs. Pick the hardware, the model, the precision and the engine features, then submit. The plan is scored on whether it <b>fits</b>, <b>meets the SLO</b>, and <b>stays in budget</b>, using the same math as steps 1–5. A plan is some number of <b>replicas</b>, identical copies of the model, each split over 1–8 GPUs inside one machine, with users shared evenly across them. Rents: A100 $1.60 · H100 $2.50 · H200 $3.50 · B200 $6.00 per GPU-hour.</p>
     <div class="seg" id="cpbrief"></div>
@@ -462,7 +479,7 @@
   </div>
   <div class="card">
     <h3>What's exact here and what's a model</h3>
-    <p class="lede" style="font-size:13.5px"><b>Exact:</b> the memory arithmetic (weights, KV cache per token, users that fit), the MoE expert-coverage formula (assuming uniform routing; real routers are skewed), the speculative-decoding formula, the break-even math, and your Class 10 numbers. <b>Teaching models:</b> decode speed assumes 70% of peak bandwidth and compute; the scheduler sandbox uses round-number costs (prefill ≈ 25K tok/s; a decode step ≈ 12 ms plus a little per diner); the parallelism panel approximates communication with ring all-reduce and all-to-all volumes. The <b>directions</b> are the real ones; the exact milliseconds are not a benchmark. GPU specs come from the audited <a href="https://github.com/bakulbadwal/hyperscale-ledger" target="_blank" rel="noopener">Hyperscale Ledger</a>. GB means 10⁹ bytes throughout.</p>
+    <p class="lede" style="font-size:13.5px"><b>Exact:</b> the memory arithmetic (weights, KV cache per token, users that fit), the MoE expert-coverage formula (assuming uniform routing; real routers are skewed), the speculative-decoding formula, the break-even math, and your Class 10 numbers. <b>Teaching models:</b> decode speed assumes 70% of peak bandwidth and compute; the scheduler sandbox uses round-number costs (prefill ≈ 25K tok/s; a decode step ≈ 12 ms plus a little per diner); the parallelism panel approximates communication with ring all-reduce and all-to-all volumes. The <b>directions</b> are the real ones; the exact milliseconds are not a benchmark. The capstone's GPU rents ($1.60–$6.00 an hour) are illustrative round numbers in the range of 2026 on-demand prices, not quotes. GPU specs come from the audited <a href="https://github.com/bakulbadwal/hyperscale-ledger" target="_blank" rel="noopener">Hyperscale Ledger</a>. GB means 10⁹ bytes throughout.</p>
     <div class="btnrow"><button class="ghost" id="reset">Reset my progress</button></div>
   </div>
 </section>
@@ -475,6 +492,13 @@
 <script src="js/core.js"></script>
 <script src="js/sim.js"></script>
 <script src="js/glossary.js"></script>
+<script src="js/art/s0.js"></script>
+<script src="js/art/s1.js"></script>
+<script src="js/art/s2.js"></script>
+<script src="js/art/s3.js"></script>
+<script src="js/art/s4.js"></script>
+<script src="js/art/s5.js"></script>
+<script src="js/art/s6.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

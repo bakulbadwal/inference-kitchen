@@ -1,0 +1,782 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-23T23:52:23-04:00",
+  "title": "Design System: Inference Kitchen",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#FBF7EC",
+        "oklch": "oklch(97.6% 0.015 90.2)",
+        "tonalRamp": [
+          "#0E0B05",
+          "#28251D",
+          "#454239",
+          "#646158",
+          "#868278",
+          "#A9A59B",
+          "#CDC9BE",
+          "#F2EEE3"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Sheet",
+        "canonical": "#FFFDF6",
+        "oklch": "oklch(99.4% 0.009 93.6)",
+        "tonalRamp": [
+          "#0C0B07",
+          "#262520",
+          "#44423C",
+          "#63615B",
+          "#84827C",
+          "#A7A59E",
+          "#CBC9C2",
+          "#F0EEE7"
+        ]
+      },
+      "cream-board": {
+        "role": "neutral",
+        "displayName": "Cream Board",
+        "canonical": "#FFF6DC",
+        "oklch": "oklch(97.3% 0.035 91.1)",
+        "tonalRamp": [
+          "#110A00",
+          "#2B2410",
+          "#49412C",
+          "#69614A",
+          "#8A826B",
+          "#ADA58C",
+          "#D2C9B0",
+          "#F7EED4"
+        ]
+      },
+      "butter-hover": {
+        "role": "neutral",
+        "displayName": "Butter",
+        "canonical": "#FFF1C6",
+        "oklch": "oklch(95.9% 0.058 92.1)",
+        "tonalRamp": [
+          "#140900",
+          "#2F2400",
+          "#4D411B",
+          "#6D603A",
+          "#8F825A",
+          "#B2A57C",
+          "#D6C99F",
+          "#FCEEC3"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "canonical": "#E7DCC4",
+        "oklch": "oklch(89.7% 0.034 86.3)",
+        "tonalRamp": [
+          "#110A00",
+          "#2C2411",
+          "#4A412D",
+          "#6A604B",
+          "#8B816B",
+          "#AEA48D",
+          "#D3C8B1",
+          "#F9EDD5"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#3A2418",
+        "oklch": "oklch(28.5% 0.040 49.2)",
+        "tonalRamp": [
+          "#180600",
+          "#351F13",
+          "#543C2F",
+          "#745B4D",
+          "#977C6E",
+          "#BB9E90",
+          "#E0C2B3",
+          "#FFE7D8"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line Brown",
+        "canonical": "#4A2E1E",
+        "oklch": "oklch(33.1% 0.049 50.2)",
+        "tonalRamp": [
+          "#1A0400",
+          "#381D0E",
+          "#573A2A",
+          "#785948",
+          "#9B7A68",
+          "#BF9D8A",
+          "#E4C1AD",
+          "#FFE6D2"
+        ]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Soft Brown",
+        "canonical": "#6E5040",
+        "oklch": "oklch(45.9% 0.048 49.2)",
+        "tonalRamp": [
+          "#1A0400",
+          "#371D0F",
+          "#573A2B",
+          "#785949",
+          "#9B7A69",
+          "#BF9D8B",
+          "#E4C1AE",
+          "#FFE6D3"
+        ]
+      },
+      "school-bus-yellow": {
+        "role": "primary",
+        "displayName": "School-Bus Yellow",
+        "canonical": "#F4C430",
+        "oklch": "oklch(84.0% 0.160 89.2)",
+        "tonalRamp": [
+          "#210000",
+          "#3F1A00",
+          "#633700",
+          "#855800",
+          "#A87A00",
+          "#CD9E00",
+          "#F3C32E",
+          "#FFEA78"
+        ]
+      },
+      "brick": {
+        "role": "primary",
+        "displayName": "Brick Red",
+        "canonical": "#C8452F",
+        "oklch": "oklch(57.1% 0.171 32.0)",
+        "tonalRamp": [
+          "#320000",
+          "#560000",
+          "#860000",
+          "#AD2A14",
+          "#D5513A",
+          "#FD765D",
+          "#FF9B80",
+          "#FFCBB3"
+        ]
+      },
+      "grass": {
+        "role": "secondary",
+        "displayName": "Grass Green",
+        "canonical": "#5FA03C",
+        "oklch": "oklch(64.0% 0.150 136.2)",
+        "tonalRamp": [
+          "#001400",
+          "#003100",
+          "#0F5100",
+          "#337300",
+          "#559631",
+          "#78BA56",
+          "#9BDF7A",
+          "#C3FFA5"
+        ]
+      },
+      "sky": {
+        "role": "secondary",
+        "displayName": "Sky Blue",
+        "canonical": "#9CCBEA",
+        "oklch": "oklch(82.0% 0.066 237.5)",
+        "tonalRamp": [
+          "#000D23",
+          "#002941",
+          "#1A4761",
+          "#3B6782",
+          "#5C88A5",
+          "#7EACCA",
+          "#A1D0EF",
+          "#C6F6FF"
+        ]
+      },
+      "sand": {
+        "role": "tertiary",
+        "displayName": "Sand",
+        "canonical": "#DDBB8A",
+        "oklch": "oklch(81.0% 0.075 76.4)",
+        "tonalRamp": [
+          "#1C0400",
+          "#391E00",
+          "#583C07",
+          "#795B2C",
+          "#9C7C4D",
+          "#C09F6F",
+          "#E5C392",
+          "#FFE9B6"
+        ]
+      },
+      "lilac": {
+        "role": "tertiary",
+        "displayName": "Lilac",
+        "canonical": "#B8A3DC",
+        "oklch": "oklch(75.3% 0.083 301.3)",
+        "tonalRamp": [
+          "#120027",
+          "#2D1846",
+          "#4A3667",
+          "#6A5589",
+          "#8B77AD",
+          "#AE99D1",
+          "#D2BDF7",
+          "#F8E2FF"
+        ]
+      },
+      "steel": {
+        "role": "tertiary",
+        "displayName": "Steel",
+        "canonical": "#B9BDC2",
+        "oklch": "oklch(79.7% 0.008 253.9)",
+        "tonalRamp": [
+          "#090B0F",
+          "#222529",
+          "#3F4246",
+          "#5E6266",
+          "#7F8387",
+          "#A1A5AA",
+          "#C5C9CF",
+          "#EBEFF4"
+        ]
+      },
+      "wood": {
+        "role": "tertiary",
+        "displayName": "Wood",
+        "canonical": "#B8793F",
+        "oklch": "oklch(63.0% 0.108 61.3)",
+        "tonalRamp": [
+          "#260000",
+          "#471000",
+          "#693000",
+          "#8C510E",
+          "#B07238",
+          "#D6955B",
+          "#FCB97F",
+          "#FFDEA3"
+        ]
+      },
+      "brick-d": {
+        "role": "primary",
+        "displayName": "Brick Text Partner",
+        "canonical": "#A5321F",
+        "oklch": "oklch(48.8% 0.154 32.0)",
+        "tonalRamp": [
+          "#320000",
+          "#560000",
+          "#800400",
+          "#A73421",
+          "#CE5843",
+          "#F67C65",
+          "#FFA188",
+          "#FFCBB3"
+        ]
+      },
+      "grass-d": {
+        "role": "secondary",
+        "displayName": "Grass Text Partner",
+        "canonical": "#3B7422",
+        "oklch": "oklch(50.2% 0.129 137.7)",
+        "tonalRamp": [
+          "#001400",
+          "#003100",
+          "#165000",
+          "#38711F",
+          "#5A9443",
+          "#7CB866",
+          "#9FDD89",
+          "#C4FFAD"
+        ]
+      },
+      "sky-d": {
+        "role": "secondary",
+        "displayName": "Sky Text Partner",
+        "canonical": "#246A9C",
+        "oklch": "oklch(50.5% 0.105 244.0)",
+        "tonalRamp": [
+          "#000633",
+          "#002653",
+          "#004675",
+          "#206698",
+          "#4589BD",
+          "#68ACE2",
+          "#8CD1FF",
+          "#B1F7FF"
+        ]
+      },
+      "yellow-d": {
+        "role": "primary",
+        "displayName": "Yellow Text Partner",
+        "canonical": "#8A6300",
+        "oklch": "oklch(52.6% 0.109 81.5)",
+        "tonalRamp": [
+          "#200000",
+          "#3E1B00",
+          "#5E3900",
+          "#805900",
+          "#A37B29",
+          "#C79E4F",
+          "#EDC274",
+          "#FFE898"
+        ]
+      },
+      "note-yellow": {
+        "role": "neutral",
+        "displayName": "Sticky-Note Yellow",
+        "canonical": "#FFF1A8",
+        "oklch": "oklch(95.3% 0.093 98.6)",
+        "tonalRamp": [
+          "#160800",
+          "#312400",
+          "#4F4200",
+          "#6F6116",
+          "#91833C",
+          "#B4A65F",
+          "#D8CA83",
+          "#FEF0A7"
+        ]
+      },
+      "chalkboard": {
+        "role": "neutral",
+        "displayName": "Chalkboard Green",
+        "canonical": "#2F4A3A",
+        "oklch": "oklch(38.2% 0.043 157.6)",
+        "tonalRamp": [
+          "#001005",
+          "#112B1D",
+          "#2E4939",
+          "#4D6958",
+          "#6D8A78",
+          "#8FAE9B",
+          "#B3D2BE",
+          "#D8F8E3"
+        ]
+      },
+      "chalk": {
+        "role": "neutral",
+        "displayName": "Chalk",
+        "canonical": "#E9F1E4",
+        "oklch": "oklch(94.9% 0.019 133.1)",
+        "tonalRamp": [
+          "#080D05",
+          "#21271E",
+          "#3E443A",
+          "#5D6459",
+          "#7E8579",
+          "#A0A89C",
+          "#C4CCBF",
+          "#E9F1E4"
+        ]
+      },
+      "scene-sky": {
+        "role": "neutral",
+        "displayName": "Scene Sky",
+        "canonical": "#E5F2FA",
+        "oklch": "oklch(95.4% 0.018 234.5)",
+        "tonalRamp": [
+          "#050C11",
+          "#1D272C",
+          "#39444A",
+          "#58636A",
+          "#79848B",
+          "#9BA7AF",
+          "#BFCBD3",
+          "#E4F1F9"
+        ]
+      },
+      "tint-info": {
+        "role": "neutral",
+        "displayName": "Info Tint",
+        "canonical": "#EAF4FB",
+        "oklch": "oklch(96.2% 0.014 238.0)",
+        "tonalRamp": [
+          "#060C10",
+          "#1F262B",
+          "#3B4349",
+          "#5A6368",
+          "#7B848A",
+          "#9DA7AD",
+          "#C1CBD1",
+          "#E6F0F7"
+        ]
+      },
+      "tint-warn": {
+        "role": "neutral",
+        "displayName": "Warn Tint",
+        "canonical": "#FFF3CC",
+        "oklch": "oklch(96.4% 0.052 92.9)",
+        "tonalRamp": [
+          "#130900",
+          "#2E2402",
+          "#4C4120",
+          "#6B613E",
+          "#8D825E",
+          "#B0A580",
+          "#D5C9A3",
+          "#FAEEC8"
+        ]
+      },
+      "tint-alarm": {
+        "role": "neutral",
+        "displayName": "Alarm Tint",
+        "canonical": "#FBE3DC",
+        "oklch": "oklch(93.3% 0.028 36.9)",
+        "tonalRamp": [
+          "#150704",
+          "#31201B",
+          "#503D37",
+          "#705C56",
+          "#927D77",
+          "#B69F99",
+          "#DBC3BC",
+          "#FFE8E1"
+        ]
+      },
+      "tint-ok": {
+        "role": "neutral",
+        "displayName": "OK Tint",
+        "canonical": "#E7F3DE",
+        "oklch": "oklch(95.0% 0.031 131.5)",
+        "tonalRamp": [
+          "#070E02",
+          "#202819",
+          "#3C4635",
+          "#5B6553",
+          "#7C8674",
+          "#9EA996",
+          "#C2CEB9",
+          "#E7F3DE"
+        ]
+      },
+      "right-green": {
+        "role": "secondary",
+        "displayName": "Right-Answer Green",
+        "canonical": "#BFE3A6",
+        "oklch": "oklch(87.5% 0.090 132.9)",
+        "tonalRamp": [
+          "#001100",
+          "#122D00",
+          "#2E4C13",
+          "#4D6C34",
+          "#6D8E55",
+          "#8FB177",
+          "#B3D69A",
+          "#D7FCBE"
+        ]
+      },
+      "wrong-rose": {
+        "role": "primary",
+        "displayName": "Wrong-Answer Rose",
+        "canonical": "#F4B7A7",
+        "oklch": "oklch(83.1% 0.075 35.2)",
+        "tonalRamp": [
+          "#220000",
+          "#421408",
+          "#633225",
+          "#865144",
+          "#AA7264",
+          "#CF9585",
+          "#F6B8A8",
+          "#FFDDCD"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Signboard",
+        "purpose": "Masthead signboard only; 36px at 720px and below."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page h1 and each step's card h2."
+      },
+      "title": {
+        "displayName": "Hand Title",
+        "purpose": "Card h3 sub-heads, in brick-d."
+      },
+      "readout": {
+        "displayName": "Readout",
+        "purpose": "Live numbers on price tags; 30px big variant; tabular figures always."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Sentences and explanations; ledes capped at 70ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Anything written on an object: buttons, slider headers, legends, captions, nav signs, footer."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift",
+        "value": "3px 4px 0 rgba(74,46,30,.16)",
+        "purpose": "Resting depth for cards, scenes, masthead, chalkboard."
+      },
+      {
+        "name": "ink-offset",
+        "value": "2px 3px 0 #4A2E1E",
+        "purpose": "Primary action button; grows to 3px 4px 0 on hover, 0 0 0 on press."
+      },
+      {
+        "name": "ink-offset-sm",
+        "value": "1px 2px 0 #4A2E1E",
+        "purpose": "Ghost buttons, prediction options, slider thumb."
+      },
+      {
+        "name": "sticky-lift",
+        "value": "3px 4px 0 rgba(74,46,30,.2)",
+        "purpose": "Sticky-note predictions."
+      },
+      {
+        "name": "tooltip-lift",
+        "value": "3px 4px 0 rgba(74,46,30,.25)",
+        "purpose": "Glossary tooltip."
+      },
+      {
+        "name": "sign-tint-band",
+        "value": "inset 0 6px 0 <tint>",
+        "purpose": "Painted top band on step signs (9px on storefront cards)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-rise",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Section rise, plate pop, meter fill, explanation reveal."
+      },
+      {
+        "name": "ease-lift",
+        "value": "cubic-bezier(.2,.8,.2,1)",
+        "purpose": "Hover lifts on signs and storefronts, toggle knob."
+      },
+      {
+        "name": "rise",
+        "value": "translateY(8px)->none, opacity 0->1, 0.35s",
+        "purpose": "The one motion on step change."
+      },
+      {
+        "name": "plate",
+        "value": "translateY(-14px) scale(.7)->none, 0.32s",
+        "purpose": "Each decoded token plating in."
+      },
+      {
+        "name": "press",
+        "value": "0.1s transform + box-shadow",
+        "purpose": "Buttons pressing into their shadow."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "all animation and transition off",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "480px",
+        "purpose": "Tighter card padding, smaller headline and readouts."
+      },
+      {
+        "name": "nav-strip",
+        "value": "600px",
+        "purpose": "Swipeable single-row step signs; footer becomes static."
+      },
+      {
+        "name": "header-stack",
+        "value": "720px",
+        "purpose": "Masthead stacks above headline."
+      },
+      {
+        "name": "grid-collapse",
+        "value": "760px",
+        "purpose": "2/3-up grids to 1, 4-up to 2, Main Street to 2-up."
+      },
+      {
+        "name": "stage-stack",
+        "value": "840px",
+        "purpose": "Controls column stacks above the stage."
+      }
+    ],
+    "filters": [
+      {
+        "name": "gouache",
+        "value": "feTurbulence fractalNoise baseFrequency .045 numOctaves 2 seed 3 -> feDisplacementMap scale 1.3",
+        "purpose": "Wobbles every edge of the cutaway scenes."
+      },
+      {
+        "name": "scene-overlay",
+        "value": "pigment mottle (fractalNoise .018/.035) + paper grain (.85), multiply, opacity .34",
+        "purpose": "Laid over each scene only."
+      },
+      {
+        "name": "body-grain",
+        "value": "fractalNoise .85, 12% line-brown, 240px tile",
+        "purpose": "Paper tooth on the page ground."
+      }
+    ],
+    "sceneRules": {
+      "viewBox": "0 0 960 400",
+      "outline": "#4A2E1E, mostly 1.5-2px",
+      "skinTones": [
+        "#F1C9A5",
+        "#D9A27A",
+        "#9C6B4A"
+      ],
+      "labels": "Every object labelled in Patrick Hand with a 1px hairline pointer",
+      "signs": "Uppercase Grandstander 800 in paper colour; >=20px gets a 2px dark offset copy, smaller signs do not",
+      "workers": "Volumetric cartoon people, not stick figures",
+      "fills": "Flat only; no gradients"
+    }
+  },
+  "components": [
+    {
+      "name": "Action Button",
+      "kind": "button",
+      "refersTo": "button-act",
+      "description": "Painted yellow sign that presses into its solid ink shadow; the one primary action per panel.",
+      "html": "<button class=\"ds-btn-act\">Hit Enter</button>",
+      "css": ".ds-btn-act{background:#F4C430;color:#3A2418;border:2.5px solid #4A2E1E;padding:8px 20px 9px;border-radius:10px;font-family:Grandstander,'Patrick Hand',system-ui,sans-serif;font-weight:700;font-size:18px;line-height:1;cursor:pointer;box-shadow:2px 3px 0 #4A2E1E;transition:transform .1s,box-shadow .1s}.ds-btn-act:hover{transform:translate(-1px,-1px);box-shadow:3px 4px 0 #4A2E1E}.ds-btn-act:active{transform:translate(2px,3px);box-shadow:0 0 0 #4A2E1E}.ds-btn-act:focus-visible{outline:3px solid #246A9C;outline-offset:2px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Sheet-faced secondary sign with a small ink offset; butter on hover.",
+      "html": "<button class=\"ds-btn-ghost\">Reset kitchen</button>",
+      "css": ".ds-btn-ghost{background:#FFFDF6;color:#3A2418;border:2px solid #4A2E1E;padding:6px 13px 7px;border-radius:8px;font-family:'Patrick Hand',Kalam,system-ui,sans-serif;font-size:16px;line-height:1.1;cursor:pointer;box-shadow:1px 2px 0 #4A2E1E;transition:transform .1s,box-shadow .1s}.ds-btn-ghost:hover{background:#FFF1C6}.ds-btn-ghost:active{transform:translate(1px,2px);box-shadow:0 0 0 #4A2E1E}.ds-btn-ghost:focus-visible{outline:3px solid #246A9C;outline-offset:2px}"
+    },
+    {
+      "name": "Segmented Options",
+      "kind": "chip",
+      "refersTo": "seg-option",
+      "description": "Row of small signs for picking a model, GPU or precision; selected fills sky.",
+      "html": "<div class=\"ds-seg\"><button>FP16</button><button class=\"on\">FP8</button><button>FP4</button></div>",
+      "css": ".ds-seg{display:flex;gap:6px;flex-wrap:wrap}.ds-seg button{background:#FFFDF6;border:2px solid #4A2E1E;color:#3A2418;padding:4px 10px 5px;border-radius:7px;cursor:pointer;font-family:'Patrick Hand',Kalam,system-ui,sans-serif;font-size:16px;line-height:1.2;transition:transform .12s}.ds-seg button:hover{transform:translateY(-1px)}.ds-seg button.on{background:#9CCBEA;box-shadow:inset 0 -3px 0 rgba(74,46,30,.18)}.ds-seg button:focus-visible{outline:3px solid #246A9C;outline-offset:2px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "text-field",
+      "description": "Sheet field with a line outline and a sky-d focus ring.",
+      "html": "<input class=\"ds-input\" type=\"text\" value=\"Explain why the sky is blue.\">",
+      "css": ".ds-input{background:#FFFDF6;border:2px solid #4A2E1E;color:#3A2418;padding:7px 10px;border-radius:7px;font-family:Andika,system-ui,sans-serif;font-size:16px;width:260px}.ds-input:focus{outline:3px solid #246A9C;outline-offset:1px}"
+    },
+    {
+      "name": "Painted Step Signs",
+      "kind": "nav",
+      "refersTo": "nav-sign",
+      "description": "Step navigation as painted street signs with drawn icons and a tint band; active sign fills and tilts.",
+      "html": "<nav class=\"ds-nav\"><button class=\"on\" style=\"--c:#F4C430\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M5 16a7 7 0 0 1 14 0z\" fill=\"#F4C430\" stroke=\"#4A2E1E\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/><rect x=\"3\" y=\"16\" width=\"18\" height=\"3\" rx=\"1\" fill=\"#B8793F\" stroke=\"#4A2E1E\" stroke-width=\"1.8\"/><circle cx=\"12\" cy=\"8\" r=\"1.6\" fill=\"#4A2E1E\"/></svg>Hit Enter</button><button style=\"--c:#E98B6F\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" aria-hidden=\"true\"><rect x=\"2\" y=\"11\" width=\"20\" height=\"4\" fill=\"#B8793F\" stroke=\"#4A2E1E\" stroke-width=\"1.8\"/><rect x=\"4\" y=\"15\" width=\"16\" height=\"6\" fill=\"#B9BDC2\" stroke=\"#4A2E1E\" stroke-width=\"1.8\"/><rect x=\"5\" y=\"5\" width=\"4\" height=\"6\" fill=\"#5FA03C\" stroke=\"#4A2E1E\" stroke-width=\"1.8\"/></svg>The Counter</button></nav>",
+      "css": ".ds-nav{display:flex;gap:6px;flex-wrap:wrap;padding-bottom:14px;border-bottom:3px dashed #E7DCC4}.ds-nav button{background:#FFFDF6;border:2.5px solid #4A2E1E;border-radius:8px;color:#3A2418;padding:10px 8px 6px;cursor:pointer;font-family:'Patrick Hand',Kalam,system-ui,sans-serif;font-size:16px;line-height:1.15;box-shadow:inset 0 6px 0 var(--c),3px 4px 0 rgba(74,46,30,.16);transition:transform .15s cubic-bezier(.2,.8,.2,1)}.ds-nav button svg{vertical-align:-4px;margin-right:4px}.ds-nav button:hover{transform:translateY(-2px)}.ds-nav button.on{background:var(--c);transform:translateY(-3px) rotate(-1deg)}.ds-nav button:focus-visible{outline:3px solid #246A9C;outline-offset:2px}"
+    },
+    {
+      "name": "Price-Tag Readout",
+      "kind": "custom",
+      "refersTo": "price-tag",
+      "description": "Live number on a tag hung from a nail; value colour carries meaning via the text partners.",
+      "html": "<div class=\"ds-tag\"><div class=\"v\">41 tok/s</div><div class=\"l\">per diner</div></div>",
+      "css": ".ds-tag{position:relative;display:inline-block;min-width:140px;background:#FFFDF6;border:2px solid #4A2E1E;border-radius:8px;padding:22px 8px 9px;text-align:center}.ds-tag::before{content:'';position:absolute;top:5px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#FBF7EC;border:2px solid #4A2E1E}.ds-tag .v{font-family:Grandstander,'Patrick Hand',system-ui,sans-serif;font-weight:800;font-size:23px;line-height:1.15;font-variant-numeric:tabular-nums;color:#3B7422}.ds-tag .l{font-family:'Patrick Hand',Kalam,system-ui,sans-serif;font-size:14.5px;color:#6E5040;margin-top:2px}"
+    },
+    {
+      "name": "Sticky-Note Prediction",
+      "kind": "custom",
+      "refersTo": "sticky-note",
+      "description": "Predict-then-reveal question on a taped, slightly tilted sticky note.",
+      "html": "<div class=\"ds-note\"><div class=\"tag\">Predict first</div><div class=\"q\">Double the batch. What happens to each diner's speed?</div><div class=\"opts\"><button>Halves</button><button class=\"right\">Barely drops</button></div></div>",
+      "css": ".ds-note{position:relative;max-width:420px;background:#FFF1A8;border:2px solid #4A2E1E;border-radius:4px;padding:16px 16px 14px;margin:20px 4px 14px;box-shadow:3px 4px 0 rgba(74,46,30,.2);transform:rotate(-.4deg);font-family:Andika,system-ui,sans-serif;color:#3A2418}.ds-note::before{content:'';position:absolute;top:-10px;left:50%;width:80px;height:20px;margin-left:-40px;background:rgba(156,203,234,.75);border:1.5px solid rgba(74,46,30,.35);transform:rotate(2deg)}.ds-note .tag{font-family:Grandstander,'Patrick Hand',system-ui,sans-serif;font-weight:700;font-size:17px;color:#A5321F;margin-bottom:6px}.ds-note .q{font-weight:700;margin-bottom:10px}.ds-note .opts{display:flex;gap:8px}.ds-note .opts button{background:#FFFDF6;border:2px solid #4A2E1E;color:#3A2418;padding:6px 13px 7px;border-radius:8px;cursor:pointer;font-family:'Patrick Hand',Kalam,system-ui,sans-serif;font-size:16.5px;box-shadow:1px 2px 0 #4A2E1E}.ds-note .opts button:hover{background:#FFFBE6}.ds-note .opts button.right{background:#BFE3A6}.ds-note .opts button:focus-visible{outline:3px solid #246A9C;outline-offset:2px}"
+    },
+    {
+      "name": "Chalkboard Takeaway",
+      "kind": "card",
+      "refersTo": "chalkboard",
+      "description": "Say-it-out-loud takeaway chalked on a wood-framed board.",
+      "html": "<div class=\"ds-chalk\"><div class=\"tag\">Say it out loud</div><div class=\"line\">Decode is hauling books, not cooking.</div></div>",
+      "css": ".ds-chalk{border:6px solid #B8793F;border-radius:10px;padding:14px 18px;background:#2F4A3A;color:#E9F1E4;box-shadow:inset 0 0 0 2px #4A2E1E,3px 4px 0 rgba(74,46,30,.16)}.ds-chalk .tag{font-family:'Patrick Hand',Kalam,system-ui,sans-serif;font-size:16px;color:#F4C430;margin-bottom:6px}.ds-chalk .line{font-family:Grandstander,'Patrick Hand',system-ui,sans-serif;font-weight:700;font-size:21px;line-height:1.45;color:#FFFDF6}"
+    },
+    {
+      "name": "Main Street Storefront",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Who-sells-what shopfront with a painted awning band; hot shop rises, others fade.",
+      "html": "<div class=\"ds-shop\"><b>GPU depot</b><span>rents empty kitchens by the hour</span></div>",
+      "css": ".ds-shop{--c:#5FA03C;display:inline-block;width:200px;background:#FFFDF6;border:2.5px solid #4A2E1E;border-radius:8px;padding:18px 10px 10px;box-shadow:inset 0 9px 0 var(--c);transition:transform .2s cubic-bezier(.2,.8,.2,1),background .2s}.ds-shop:hover{background:#FFF1C6;transform:translateY(-4px)}.ds-shop b{display:block;font-family:Grandstander,'Patrick Hand',system-ui,sans-serif;font-weight:700;font-size:19px;color:#3A2418}.ds-shop span{display:block;font-family:'Patrick Hand',Kalam,system-ui,sans-serif;font-size:14.5px;color:#6E5040}"
+    },
+    {
+      "name": "Capstone Idle State",
+      "kind": "custom",
+      "refersTo": "panel",
+      "description": "Empty state for the capstone pass: dashed cream board, drawn chef, sign heading.",
+      "html": "<div class=\"ds-idle\"><svg viewBox=\"0 0 24 24\" width=\"120\" aria-hidden=\"true\"><path d=\"M7 13c-4 0-5-6-1-7 0-4 6-5 7-2 2-3 7-2 7 2 4 1 3 7-1 7z\" fill=\"#FFFDF6\" stroke=\"#4A2E1E\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/><rect x=\"7\" y=\"13\" width=\"10\" height=\"7\" rx=\"1\" fill=\"#F4C430\" stroke=\"#4A2E1E\" stroke-width=\"1.8\"/></svg><b>The pass is empty</b>Set up the kitchen, then submit.</div>",
+      "css": ".ds-idle{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:260px;border:2.5px dashed rgba(74,46,30,.35);border-radius:12px;background:#FFF6DC;text-align:center;padding:24px;color:#6E5040;font-family:'Patrick Hand',Kalam,system-ui,sans-serif;font-size:17px;line-height:1.4}.ds-idle b{font-family:Grandstander,'Patrick Hand',system-ui,sans-serif;font-weight:800;font-size:22px;color:#3A2418}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Cutaway Kitchen",
+    "overview": "**Creative North Star: \"The Cutaway Kitchen\"**\n\nEvery surface is a page from a Busytown cross-section spread: flat gouache fields painted on warm paper, outlined in one warm brown, where every worker and object wears its label. The interface is part of the same picture. Buttons are painted signs, readouts are price tags hung on a nail, predictions are sticky notes taped to the page, takeaways are chalked on a wood-framed board, and the glossary is a café menu board. Nothing is a floating glass card or a dashboard tile; everything is an object that could sit in the kitchen.\n\nDensity is moderate and legible first. Numbers are the payload of the product, so readouts get the heaviest face and tabular figures, and the world's texture (grain, mottle, wobble) is applied to paper and pictures, never over a number. The system rejects the dark \"every AI tool\" look (dark ground, neon or gold accent, glowing cards) and the corporate SaaS dashboard; both are user-confirmed anti-references in PRODUCT.md.",
+    "keyCharacteristics": [
+      "Warm paper ground (paper) with a fine fractal-noise grain on the body.",
+      "One outline colour everywhere: warm brown line, 2 to 2.5px on UI, 1 to 3px in scenes.",
+      "Saturated primaries used as whole flat fields, each with a darker partner for text.",
+      "Three hand-lettered faces with fixed jobs: Grandstander signs, Patrick Hand labels, Andika body.",
+      "Depth by hard, offset, un-blurred shadows, like cut paper, never by blur or glow.",
+      "One illustrated 960x400 cutaway per step, every object labelled with a hairline pointer."
+    ],
+    "rules": [
+      {
+        "name": "The Partner Rule",
+        "body": "A primary never sets text on paper. Fields take the primary; words, thin lines and numbers take its `-d` partner.",
+        "section": "colors"
+      },
+      {
+        "name": "The Whole-Field Rule",
+        "body": "Colour is applied as flat, whole shapes: a sign, a roof, a stripe. No gradients, no glows, no tinted transparency washes except the three paper overlays (body grain, scene mottle, scene grain).",
+        "section": "colors"
+      },
+      {
+        "name": "The Three Jobs Rule",
+        "body": "Grandstander is for signs and numbers, Patrick Hand is for labels written on objects, Andika is for sentences. A paragraph is never set in Patrick Hand; a readout is never set in Andika.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Readout Rule",
+        "body": "Every live number uses the sign face with tabular figures so it does not jitter while a slider moves.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Scene Per Step Rule",
+        "body": "Each step gets exactly one cutaway illustration, full card width, at the top of its first card. Scenes are not repeated as decoration elsewhere.",
+        "section": "layout"
+      },
+      {
+        "name": "The No-Blur Rule",
+        "body": "Shadows have zero blur radius. Pressing a button moves it into its shadow; there is no glow state anywhere.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do outline every object in line brown (#4A2E1E): 2.5px on primary UI objects, 2px on secondary ones, 1.5 to 2px in scenes.",
+      "Do put text in the `-d` partner of a hue and keep the bright primary for the field (The Partner Rule).",
+      "Do give depth with a zero-blur offset shadow (3px 4px 0 at 16% line brown for sheets, solid line brown for pressable buttons).",
+      "Do set every live number in Grandstander 800 with tabular figures, on a sheet surface with no texture over it.",
+      "Do draw one 960x400 cutaway per step, label every object with a hairline pointer, and give 20px-and-up sign lettering a 2px dark offset copy.",
+      "Do use drawn SVG icons (24x24, 1.8px line stroke, flat primary fills) wherever an icon is needed.",
+      "Do keep one motion per event: the section rise on step change, the plate pop on decode.",
+      "Do make the step signs a swipeable single row and release the fixed footer at 600px and below."
+    ],
+    "donts": [
+      "Don't use the dark \"every AI tool\" look: dark ground, neon or gold accent, glowing cards.",
+      "Don't use corporate SaaS dashboard chrome: grey sidebars, flat KPI tiles, hairline-bordered data tables, blue primary buttons.",
+      "Don't use emoji anywhere; icons are drawn in the scene style. Plain typographic marks (check, cross, star, arrow, return) are allowed as text. The one emoji in the build (the glossary tooltip's frying pan) is a known deviation, not precedent.",
+      "Don't use gradients inside scenes; colour is flat and whole. The only multi-colour fills in UI are the hard-stop stripe patterns on the memory counter.",
+      "Don't blur a shadow or add a glow, including on hover and focus.",
+      "Don't put the paper grain, mottle overlay or gouache wobble over a number, a chart, or body text.",
+      "Don't add a 2px offset shadow to sign lettering under 20px; at label size it muddies the letters.",
+      "Don't set sentences in Patrick Hand or signs in Andika."
+    ]
+  }
+}
