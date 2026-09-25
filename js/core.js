@@ -160,6 +160,60 @@
   /* ---------- Production ---------- */
   function hoursBetweenFailures(nGpu) { return 50000 / nGpu; }
 
+  /* ---------- 6. The other kitchens ----------
+     Kitchens beyond the datacenter GPU. Class-level figures from the chip guide v4 (§3, §4, §6a)
+     and the Physical AI guide v3 (§2.4). `where` answers the first of the three questions:
+     sram = on the chip, hbm = in the package beside the chip, lpddr = shared on the board. */
+  var KITCHENS = [
+    { id: "npu", name: "Laptop NPU", sub: "Snapdragon X2 Elite class, in a 32 GB laptop", where: "lpddr", capGB: 32, bwTBs: 0.135,
+      unit: "laptop", watts: "a few watts for the NPU", note: "80–85 TOPS, but it shares one memory with the whole chip" },
+    { id: "thor", name: "Jetson AGX Thor", sub: "a humanoid robot's onboard computer", where: "lpddr", capGB: 128, bwTBs: 0.273,
+      unit: "module", watts: "40–130 W", note: "2,070 FP4 TFLOPS in a $3,499 dev kit" },
+    { id: "m5u", name: "Mac Studio, M5 Ultra", sub: "Apple's unified memory", where: "lpddr", capGB: 512, bwTBs: 1.2,
+      unit: "Mac", watts: "desktop-class", note: "holds giant models; hauls about 3× slower than an H100" },
+    { id: "h100", gpu: "h100-sxm", name: "H100", sub: "the kitchen from steps 0–5", where: "hbm", unit: "GPU", note: "the restaurant standard" },
+    { id: "tpu7", name: "TPU v7 Ironwood", sub: "Google's own chip", where: "hbm", capGB: 192, bwTBs: 7.37,
+      unit: "chip", watts: "datacenter-class", note: "sold as 9,216-chip pods" },
+    { id: "lpu", name: "Groq 3 LPU", sub: "NVIDIA's since Dec 2025 (ex-Groq)", where: "sram", capGB: 0.5, bwTBs: 150,
+      unit: "chip", watts: "datacenter-class", note: "every weight lives on the chip", reported: "about 800 tok/s on Llama-3 70B" },
+    { id: "wse", name: "Cerebras CS-4", sub: "one chip the size of a wafer", where: "sram", capGB: 44, bwTBs: null,
+      unit: "wafer", watts: "datacenter-class", note: "PB/s-class bandwidth on the wafer", reported: "over 1,000 tok/s on trillion-parameter models" }
+  ];
+  function kitchen(id) {
+    var k = KITCHENS.filter(function (x) { return x.id === id; })[0];
+    if (k && k.gpu) { var g = gpu(k.gpu); k = Object.assign({}, k, { capGB: g.hbmGB, bwTBs: g.bwTBs, watts: g.tdpW + " W" }); }
+    return k;
+  }
+  /* One diner, short conversation: weights only, `eff` of peak bandwidth (0.7 as in step 0).
+     LPDDR kitchens can't be chained, so a model that doesn't fit gets no speed. HBM kitchens
+     scale ideally across GPUs (step 4 charges for the wires). SRAM kitchens are never computed
+     from bandwidth: once weights sit on the chip, the wires between chips set the pace. */
+  function kitchenServe(kid, mid, wPrec, eff) {
+    var k = kitchen(kid), m = model(mid), e = eff == null ? 0.7 : eff;
+    var wGB = weightsGB(m, wPrec), readGB = weightsReadGB(m, wPrec, 1);
+    var units = Math.ceil(wGB / k.capGB - 1e-9);
+    var r = { kitchen: k, weightsGB: wGB, readGB: readGB, units: units, fitsOne: units <= 1, tps: null };
+    if (k.where === "lpddr" && r.fitsOne) r.tps = k.bwTBs * 1e12 * e / (readGB * GB);
+    if (k.where === "hbm") r.tps = units * k.bwTBs * 1e12 * e / (readGB * GB);
+    return r;
+  }
+
+  /* ---------- 6b. The banquet hall: training ----------
+     FLOPs = 6 × params × tokens (2 forward + 4 backward per parameter per token).
+     Training state = 16 bytes/param: bf16 weights 2 + bf16 grads 2 + fp32 master 4 + Adam 4 + 4. */
+  var TRAIN_MODELS = [
+    { id: "t8", name: "8B (Llama 3 8B)", paramsB: 8 },
+    { id: "t70", name: "70B (Llama 3 70B)", paramsB: 70 },
+    { id: "t405", name: "405B (Llama 3 405B)", paramsB: 405 }
+  ];
+  function trainModel(id) { return TRAIN_MODELS.filter(function (m) { return m.id === id; })[0]; }
+  function trainFlops(paramsB, tokensT) { return 6 * paramsB * 1e9 * tokensT * 1e12; }
+  function trainDays(flops, nGpu, peakTFs, mfu) { return flops / (nGpu * peakTFs * 1e12 * mfu) / 86400; }
+  function trainStateGB(paramsB, bytesPerParam) { return paramsB * (bytesPerParam || 16); }
+  /* Teaching model: each GPU is independently slow on a step with probability p. */
+  function stragglerProb(p, n) { return 1 - Math.pow(1 - p, n); }
+  function stragglerSlowdown(p, n, slow) { return 1 + stragglerProb(p, n) * (slow - 1); }
+
   window.IK = {
     GB: GB, MODELS: MODELS, PREC: PREC, NVLINK_GBs: NVLINK_GBs, IB_GBs: IB_GBs,
     SHAPES: SHAPES, TRYON: TRYON,
@@ -169,6 +223,9 @@
     selfHostCostPerM: selfHostCostPerM, breakevenUtil: breakevenUtil,
     shapeUtil: shapeUtil, pooledUtil: pooledUtil,
     tryonBreakevenPerDay: tryonBreakevenPerDay, tryonAnnual: tryonAnnual,
-    hoursBetweenFailures: hoursBetweenFailures
+    hoursBetweenFailures: hoursBetweenFailures,
+    KITCHENS: KITCHENS, kitchen: kitchen, kitchenServe: kitchenServe,
+    TRAIN_MODELS: TRAIN_MODELS, trainModel: trainModel, trainFlops: trainFlops, trainDays: trainDays,
+    trainStateGB: trainStateGB, stragglerProb: stragglerProb, stragglerSlowdown: stragglerSlowdown
   };
 })();

@@ -23,7 +23,7 @@
 
   /* ---------------- persistence (never required) ---------------- */
   var KEY = "inference-kitchen-v1";
-  var store = { predicts: {}, touched: {}, said: {}, briefs: {}, ft: {} };
+  var store = { predicts: {}, touched: {}, said: {}, briefs: {}, ft: {}, sort: {} };
   try { var raw = localStorage.getItem(KEY); if (raw) store = Object.assign(store, JSON.parse(raw)); } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
 
@@ -42,7 +42,8 @@
     star: '<svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z" fill="#F4C430" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>',
     pencil: '<svg viewBox="0 0 24 24"><rect x="4" y="3" width="13" height="18" rx="1" fill="#FFFDF6" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M7 8l2 2 4-4M7 14l2 2 4-4" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none"/><path d="M15 20l6-12 1 1-6 12z" fill="#C8452F" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>'
   };
-  var NAV_ICON = { s0: "bell", s1: "counter", s2: "dial", s3: "chef", s4: "buildings", s5: "shop", s6: "star", s7: "pencil" };
+  ICONS.truck = '<svg viewBox="0 0 24 24"><rect x="2" y="8" width="13" height="9" fill="#9CCBEA" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M15 11h4l3 3v3h-7z" fill="#F4C430" stroke="#4A2E1E" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M5 11h7" stroke="#4A2E1E" stroke-width="1.8" stroke-linecap="round"/><circle cx="6" cy="18" r="2" fill="#FFFDF6" stroke="#4A2E1E" stroke-width="1.8"/><circle cx="18" cy="18" r="2" fill="#FFFDF6" stroke="#4A2E1E" stroke-width="1.8"/></svg>';
+  var NAV_ICON = { s0: "bell", s1: "counter", s2: "dial", s3: "chef", s4: "buildings", s5: "shop", s8: "truck", s6: "star", s7: "pencil" };
   var sections = qa("section");
   function buildNav() {
     var nav = $("nav"); nav.innerHTML = "";
@@ -745,6 +746,128 @@
     s5render(); tyRender(); fcRender(); csDraw();
   }
 
+  /* ================= STEP 6 · THE OTHER KITCHENS ================= */
+  var SORT_OPTS = [{ v: "sram", label: "On the chip (SRAM)" }, { v: "hbm", label: "Beside the chip (HBM)" }, { v: "lpddr", label: "Shared on the board (LPDDR)" }];
+  var WHERE = { sram: "on the chip", hbm: "beside the chip", lpddr: "shared on the board" };
+  var SORT_ORDER = ["h100", "npu", "lpu", "thor", "tpu7", "wse", "m5u"];
+  var s8 = { k: "npu", model: "8b", prec: "fp4" };
+  function kBw(k) { return k.bwTBs == null ? "PB/s-class on the wafer" : k.bwTBs >= 1 ? fmt(k.bwTBs, k.bwTBs < 10 ? 2 : 0) + " TB/s" : fmt(k.bwTBs * 1000, 0) + " GB/s"; }
+  function kCap(k) { return k.capGB < 1 ? fmt(k.capGB * 1000, 0) + " MB" : fgb(k.capGB); }
+  function kFact(k) { return "<b>" + k.name + "</b>: " + kCap(k) + " at " + kBw(k) + " · " + k.watts + " · " + k.note + "."; }
+  function s8sortRender() {
+    var box = $("s8sort"); box.innerHTML = "";
+    SORT_ORDER.forEach(function (id) {
+      var k = IK.kitchen(id);
+      var row = document.createElement("div"); row.className = "srow";
+      row.innerHTML = '<div class="sname"><b>' + k.name + "</b><span>" + k.sub + '</span></div><div class="opts"></div><div class="sfact">' + kFact(k) + "</div>";
+      var opts = row.querySelector(".opts"), btns = [];
+      function mark(v) {
+        btns.forEach(function (b) {
+          b.disabled = true;
+          if (b.dataset.v === k.where) b.classList.add("right");
+          else if (b.dataset.v === v) b.classList.add("wrong");
+        });
+        row.classList.add("done");
+      }
+      SORT_OPTS.forEach(function (o) {
+        var b = document.createElement("button"); b.type = "button"; b.textContent = o.label; b.dataset.v = o.v;
+        b.onclick = function () { store.sort[id] = o.v; save(); mark(o.v); s8sortScore(); touch("s8"); };
+        opts.appendChild(b); btns.push(b);
+      });
+      if (store.sort[id]) mark(store.sort[id]);
+      box.appendChild(row);
+    });
+    s8sortScore();
+  }
+  function s8sortScore() {
+    var placed = SORT_ORDER.filter(function (id) { return store.sort[id]; });
+    var right = placed.filter(function (id) { return store.sort[id] === IK.kitchen(id).where; }).length;
+    $("s8sortout").innerHTML = placed.length < SORT_ORDER.length
+      ? fmt(placed.length) + " of " + SORT_ORDER.length + " kitchens placed" + (placed.length ? ", " + right + " right so far." : ". Pick a counter for each one.")
+      : "<b>" + right + " of " + SORT_ORDER.length + " right.</b> The pattern: SRAM kitchens are fast but hold scraps, so a big model needs hundreds of chips. HBM kitchens are the restaurant. LPDDR kitchens hold a lot, haul slowly and sip power: that's where laptops, Macs and robot computers live.";
+  }
+  function s8render() {
+    var r = IK.kitchenServe(s8.k, s8.model, s8.prec), k = r.kitchen;
+    var moe = r.readGB < r.weightsGB - 0.01 ? " An MoE reads only the experts each word needs: " + fgb(r.readGB) + " per word, not all " + fgb(r.weightsGB) + "." : "";
+    $("s8where").textContent = WHERE[k.where];
+    $("s8w").textContent = fgb(r.weightsGB);
+    $("s8fact").innerHTML = kFact(k);
+    var out;
+    if (k.where === "sram") {
+      $("s8units").textContent = fmt(r.units) + " " + k.unit + (r.units > 1 ? "s" : "");
+      $("s8tps").textContent = "not computed";
+      out = fgb(r.weightsGB) + " of recipe books need <b>" + fmt(r.units) + " " + k.unit + (r.units > 1 ? "s" : "") + "</b>, because each holds only " + kCap(k) + " of SRAM. Once every book sits on a chip, hauling stops being the limit and the wires between chips take over (chip guide §11), so speed here is the vendor's reported figure: <b>" + k.reported + "</b>.";
+    } else if (k.where === "lpddr" && !r.fitsOne) {
+      $("s8units").textContent = "won't fit";
+      $("s8tps").textContent = "—";
+      out = fgb(r.weightsGB) + " of recipe books won't fit in this kitchen's " + kCap(k) + ", and you can't chain laptops the way you chain GPUs. Try 4-bit, or a smaller model.";
+    } else {
+      $("s8units").textContent = fmt(r.units) + " " + k.unit + (r.units > 1 ? "s" : "");
+      $("s8tps").textContent = ftps(r.tps) + " tok/s";
+      out = "Every word means hauling " + fgb(r.readGB) + " once: " + (r.units > 1 ? fmt(r.units) + " × " : "") + kBw(k) + " × 70% ÷ " + fgb(r.readGB) + " ≈ <b>" + ftps(r.tps) + " words a second</b> for one diner." + moe +
+        (k.where === "lpddr" ? " The chip's TOPS barely matters here; the haul from shared memory does." : r.units > 1 ? " That's ideal, before the wires between GPUs, which step 4 charges for. Batching many diners is where HBM kitchens earn their keep (step 2)." : " Batching many diners is where HBM kitchens earn their keep (step 2).");
+    }
+    $("s8out").innerHTML = out;
+  }
+
+  var GPU_STEPS = [1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072];
+  var P_STEPS = [0, 1e-6, 1e-5, 3e-5, 1e-4, 3e-4, 1e-3];
+  var bq = { model: "t405" };
+  function fsci(n) {
+    var e = Math.floor(Math.log10(n)), m = n / Math.pow(10, e), sup = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+    return fmt(m, 2) + " × 10" + String(e).split("").map(function (c) { return sup[+c]; }).join("");
+  }
+  function bqState() {
+    return { m: IK.trainModel(bq.model), tok: +$("bqtok").value, n: GPU_STEPS[+$("bqn").value], mfu: +$("bqmfu").value / 100, p: P_STEPS[+$("bqp").value] };
+  }
+  function bqRender() {
+    var S = bqState(), g = IK.gpu("h100-sxm");
+    var F = IK.trainFlops(S.m.paramsB, S.tok), days = IK.trainDays(F, S.n, g.bf16TF, S.mfu);
+    var P = IK.stragglerProb(S.p, S.n), days2 = days * IK.stragglerSlowdown(S.p, S.n, 1.5);
+    var stateGB = IK.trainStateGB(S.m.paramsB, 16), serveGB = S.m.paramsB * IK.PREC.fp8;
+    var hEvery = IK.hoursBetweenFailures(S.n), breaks = days2 * 24 / hEvery;
+    $("bqtokv").textContent = fmt(S.tok, 1) + "T";
+    $("bqnv").textContent = fmt(S.n);
+    $("bqmfuv").textContent = fmt(S.mfu * 100) + "%";
+    $("bqpv").textContent = S.p ? "1 in " + fmt(1 / S.p) : "never";
+    $("bqflops").textContent = fsci(F);
+    $("bqdays").textContent = fmt(days, days < 10 ? 1 : 0) + " days";
+    $("bqdays2").textContent = fmt(days2, days2 < 10 ? 1 : 0) + " days";
+    $("bqstate").textContent = fgb(stateGB) + " = " + fmt(Math.ceil(stateGB / g.hbmGB - 1e-9)) + " H100s";
+    $("bqserve").textContent = fgb(serveGB) + " = " + fmt(Math.ceil(serveGB / g.hbmGB - 1e-9)) + " H100" + (serveGB > g.hbmGB ? "s" : "");
+    $("bqfail").textContent = fdur(hEvery);
+    $("bqmw").textContent = fmt(S.n * g.tdpW / 1e6, 1) + " MW";
+    $("bqout").innerHTML = "At " + fmt(S.n) + " GPUs, every step waits for the slowest of " + fmt(S.n) + " tables. " +
+      (S.p ? "With a 1-in-" + fmt(1 / S.p) + " chance per table, <b>" + fmt(P * 100) + "%</b> of steps wait on at least one slow table, stretching the run from " + fmt(days, 0) + " to <b>" + fmt(days2, 0) + " days</b>. " : "With no slow tables the run takes " + fmt(days, 0) + " days, a world no real cluster lives in. ") +
+      "Something breaks about " + fmt(breaks) + " times over the run, so a real run saves a checkpoint constantly and restarts from the last one. Split the hall across two cities and every step waits for the round trip too.";
+    if (drawers.s8chart) drawers.s8chart();
+  }
+  drawers.s8chart = function () {
+    var S = bqState(), c = ctxFor("s8chart"), x = c.x, W = c.w, H = c.h;
+    var L = 44, R = W - 14, T = 12, B = H - 28, lo = GPU_STEPS[0], hi = GPU_STEPS[GPU_STEPS.length - 1];
+    x.lineWidth = 1; x.strokeStyle = C.line; x.fillStyle = C.dim;
+    [0, 0.5, 1].forEach(function (v) { var y = B - v * (B - T); x.beginPath(); x.moveTo(L, y); x.lineTo(R, y); x.stroke(); x.textAlign = "right"; x.fillText(fmt(v * 100) + "%", L - 6, y); });
+    x.textAlign = "center";
+    GPU_STEPS.forEach(function (n, i) { if (W < 420 && i % 2) return; x.fillText(fmt(n / 1024) + "K", logX(n, lo, hi, L, R), B + 15); });
+    x.strokeStyle = C.red; x.lineWidth = 3; x.beginPath();
+    for (var i = 0; i <= 120; i++) {
+      var n = lo * Math.pow(hi / lo, i / 120), X = logX(n, lo, hi, L, R), Y = B - IK.stragglerProb(S.p, n) * (B - T);
+      if (i) x.lineTo(X, Y); else x.moveTo(X, Y);
+    }
+    x.stroke();
+    x.fillStyle = C.txt; x.beginPath(); x.arc(logX(S.n, lo, hi, L, R), B - IK.stragglerProb(S.p, S.n) * (B - T), 6, 0, Math.PI * 2); x.fill();
+  };
+  function initS8() {
+    s8sortRender();
+    seg($("s8k"), IK.KITCHENS.map(function (k) { return { v: k.id, label: k.name }; }), s8.k, function (v) { s8.k = v; s8render(); touch("s8"); });
+    seg($("s8model"), MODEL_OPTS, s8.model, function (v) { s8.model = v; s8render(); touch("s8"); });
+    seg($("s8p"), [{ v: "bf16", label: "BF16 · 2 bytes" }, { v: "fp8", label: "FP8 · 1 byte" }, { v: "fp4", label: "4-bit · ½ byte" }], s8.prec, function (v) { s8.prec = v; s8render(); touch("s8"); });
+    var bqSeg = seg($("bqm"), IK.TRAIN_MODELS.map(function (m) { return { v: m.id, label: m.name.split(" (")[0] }; }), bq.model, function (v) { bq.model = v; bqRender(); touch("s8"); });
+    ["bqtok", "bqn", "bqmfu", "bqp"].forEach(function (id) { $(id).oninput = function () { bqRender(); touch("s8"); }; });
+    $("bqguide").onclick = function () { bq.model = "t405"; bqSeg.set("t405"); $("bqtok").value = 15.6; $("bqn").value = 4; $("bqmfu").value = 41; $("bqp").value = 4; bqRender(); touch("s8"); };
+    s8render(); bqRender();
+  }
+
   /* ================= CAPSTONE ================= */
   var RENT = { "a100-80gb-sxm": 1.6, "h100-sxm": 2.5, "h200-sxm": 3.5, "b200-sxm": 6.0 };
   var BRIEFS = {
@@ -907,7 +1030,7 @@
   initTips();
   qa(".g").forEach(function (el) { el.dataset.bound = "1"; });
   initPredicts();
-  initS0(); initS1(); initS2(); initS3(); initS4(); initS5(); initCap(); initFT();
+  initS0(); initS1(); initS2(); initS3(); initS4(); initS5(); initS8(); initCap(); initFT();
   sections.forEach(function (s) { checkSay(s.id); });
   var start = (location.hash || "").replace("#", "");
   show($(start) && $(start).tagName === "SECTION" ? start : "s0");

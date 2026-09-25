@@ -436,6 +436,97 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   </div>
 </section>
 
+<!-- ============ STEP 6 ============ -->
+<section id="s8" data-title="Other Kitchens" data-n="6">
+  <div class="card">
+    <div class="scene" data-art="s8"></div>
+    <h2>6 · The other kitchens: same recipe books, different buildings</h2>
+    <p class="lede">Steps 0–5 all happen in one kind of kitchen: a datacenter GPU with its <span class="g" data-g="hbm">HBM</span> counter. The same recipe books also get cooked in a <b>food truck</b> (the <span class="g" data-g="npu">NPU</span> in your laptop or phone), on a <b>prep line</b> where every book is already open on the counter (the <span class="g" data-g="lpu">LPU</span>), and in a robot's onboard computer. Before any of that, they get written in a <b>banquet hall</b> the size of a warehouse. Three questions sort every one of them: <b>where do the recipe books sit, how fast can they be hauled, and how much power does the kitchen draw?</b></p>
+    <p class="covers">Covers <b>Chip guide §4, §6, §6a, §13</b> · <b>Physical AI guide §2.4</b> · <b>Llama 3 paper §3.3</b></p>
+  </div>
+
+  <div class="card">
+    <h3>a · Which counter? Sort the kitchens</h3>
+    <p class="lede" style="font-size:13.5px">For each kitchen, pick where its recipe books live. <span class="g" data-g="sram">SRAM</span> is on the chip itself: the fastest memory there is, but it holds only megabytes. HBM sits in the package right beside the chip. <span class="g" data-g="lpddr">LPDDR</span> is low-power memory on the board, shared by everything on the chip.</p>
+    <div class="sortb" id="s8sort"></div>
+    <div class="callout co-i" id="s8sortout"></div>
+  </div>
+
+  <div class="card">
+    <h3>b · Same recipe, different kitchen</h3>
+    <div class="pg">
+      <div class="panel">
+        <div class="lbl">Kitchen</div><div class="seg" id="s8k" style="flex-direction:column;align-items:stretch"></div>
+        <div class="lbl">Model</div><div class="seg" id="s8model" style="flex-direction:column;align-items:stretch"></div>
+        <div class="lbl">Recipe-book precision (<span class="g" data-g="quant">quantization</span>)</div><div class="seg" id="s8p"></div>
+      </div>
+      <div>
+        <div class="grid g4">
+          <div class="stat"><div class="v" id="s8where"></div><div class="l">where the books sit</div></div>
+          <div class="stat"><div class="v gold" id="s8w"></div><div class="l">recipe books</div></div>
+          <div class="stat"><div class="v" id="s8units"></div><div class="l">kitchens to hold them</div></div>
+          <div class="stat big"><div class="v good" id="s8tps"></div><div class="l">one diner's speed</div></div>
+        </div>
+        <div class="callout co-i" id="s8out"></div>
+        <div class="chartcap" id="s8fact"></div>
+      </div>
+    </div>
+    <div class="predict" data-p="s8a">
+      <div class="tag">Guess first!</div>
+      <div class="q">An 8B model at 4-bit, running on a laptop's NPU. The chip is rated at 80 TOPS, but it reads the recipe books from shared memory at about 0.135 TB/s. How fast can it write for you?</div>
+      <div class="opts"><button data-a="0">About 3 words a second</button><button data-a="1" data-right>About 25 words a second</button><button data-a="2">About 250 words a second</button></div>
+      <div class="why">About 24. The 80 TOPS barely matters: every word means hauling all 4 GB of recipe books once, so speed ≈ 0.135 TB/s × 70% ÷ 4 GB. That's plenty for a phone-sized assistant. A 70B model doesn't even fit on a 32 GB laptop, even at 4-bit.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>c · The banquet hall: where the recipe books get written</h3>
+    <p class="lede" style="font-size:13.5px">Training is one enormous dinner service in lockstep. Every table cooks its share of the course, then all of them compare notes (the <span class="g" data-g="allreduce">all-reduce</span>) before anyone starts the next one. So the hall runs at the speed of its slowest table (a <span class="g" data-g="straggler">straggler</span>), holds far more on the counter than serving ever does, and has to be one building. The work is counted in <span class="g" data-g="flops">FLOPs</span>; how much of the stoves' time is real cooking is the <span class="g" data-g="mfu">MFU</span>.</p>
+    <div class="pg">
+      <div class="panel">
+        <div class="lbl">Model</div><div class="seg" id="bqm"></div>
+        <div class="sl"><div class="sl-h"><span>Training tokens</span><b id="bqtokv"></b></div><input type="range" id="bqtok" min="1" max="30" step="0.1" value="15.6" aria-label="Training tokens, trillions"></div>
+        <div class="sl"><div class="sl-h"><span>H100s in the hall</span><b id="bqnv"></b></div><input type="range" id="bqn" min="0" max="7" step="1" value="4" aria-label="GPU count"></div>
+        <div class="sl"><div class="sl-h"><span>MFU (real cooking time)</span><b id="bqmfuv"></b></div><input type="range" id="bqmfu" min="20" max="60" step="1" value="41" aria-label="Model FLOPs utilization"></div>
+        <div class="sl"><div class="sl-h"><span>Chance one table is slow, per step</span><b id="bqpv"></b></div><input type="range" id="bqp" min="0" max="6" step="1" value="4" aria-label="Straggler chance per GPU per step"></div>
+        <button class="ghost" id="bqguide" type="button">Load Llama 3 405B</button>
+      </div>
+      <div>
+        <div class="grid g3">
+          <div class="stat"><div class="v" id="bqflops"></div><div class="l">FLOPs to write the books (6 × params × tokens)</div></div>
+          <div class="stat"><div class="v gold" id="bqdays"></div><div class="l">days on the calendar</div></div>
+          <div class="stat"><div class="v bad" id="bqdays2"></div><div class="l">days with slow tables</div></div>
+          <div class="stat"><div class="v" id="bqstate"></div><div class="l">on the counter to train (16 bytes/param)</div></div>
+          <div class="stat"><div class="v" id="bqserve"></div><div class="l">to serve it at FP8</div></div>
+          <div class="stat"><div class="v bad" id="bqfail"></div><div class="l">something breaks every</div></div>
+        </div>
+        <canvas id="s8chart" height="190" style="margin-top:12px" aria-label="Chance a step waits on a slow table, by number of GPUs"></canvas>
+        <div class="chartcap">Red curve = chance that a step waits on at least one slow table, by hall size · dot = your hall. GPU power alone: <b id="bqmw"></b>.</div>
+        <div class="callout co-i" id="bqout"></div>
+      </div>
+    </div>
+    <div class="predict" data-p="s8b">
+      <div class="tag">Guess first!</div>
+      <div class="q">Serving Llama 3 405B at FP8 means about 405 GB of recipe books: 6 H100s. How many H100s does it take just to hold its <i>training</i> state?</div>
+      <div class="opts"><button data-a="0">About 6, same as serving</button><button data-a="1">About 12</button><button data-a="2" data-right>About 81</button><button data-a="3">About 400</button></div>
+      <div class="why">About 81. Serving keeps one copy of the weights at 1–2 bytes each. Training keeps five things per parameter: the weights (2 bytes), the gradients (2), a full-precision master copy (4), and two running averages for the optimizer (4 + 4). That's 16 bytes × 405 billion = 6.5 TB, or 81 H100s, before a single activation. It's why training is a different machine, and why a LoRA adapter, which trains about 1% of the weights, fits on one small GPU.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>d · Three kinds of kitchen, one table</h3>
+    <div class="flow f3">
+      <div class="fbox"><b>Banquet hall · training</b><span class="ex">Colossus · Stargate · Rainier</span><br>Books: <b style="display:inline">16 bytes a parameter</b>, spread over thousands of GPUs. Bound by the math and the slowest table. One building, hundreds of megawatts. A handful of labs buy it.</div>
+      <div class="fbox"><b>Restaurant · serving</b><span class="ex">steps 0–5 · H100 · TPU · LPU</span><br>Books: <b style="display:inline">1–2 bytes a parameter</b> in HBM or SRAM. Bound by hauling the books for every word. Goes wherever the diners and cheap power are. Everyone who serves a model buys it.</div>
+      <div class="fbox"><b>Food truck · edge</b><span class="ex">laptop NPU · phone · Jetson Thor</span><br>Books: <b style="display:inline">small models at 4-bit</b> in shared LPDDR. Bound by watts and memory. Runs where the data is, with no network. Trains nothing.</div>
+    </div>
+    <div class="say" data-say="s8">
+      <div class="tag">Say it out loud</div>
+      <div class="line">Every kitchen answers three questions: where the recipe books sit, how fast they can be hauled, and how much power it draws. HBM kitchens are the restaurant. SRAM kitchens trade capacity for speed and hit the wires instead. LPDDR kitchens (laptops, Macs, robot computers) hold a lot, haul slowly and sip power. The banquet hall that writes the books is another machine entirely: 16 bytes a parameter, every table waiting for the slowest, and something breaking every few hours.</div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CAPSTONE ============ -->
 <section id="s6" data-title="Capstone" data-n="★">
   <div class="card">
@@ -499,6 +590,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <script src="js/art/s4.js"></script>
 <script src="js/art/s5.js"></script>
 <script src="js/art/s6.js"></script>
+<script src="js/art/s8.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

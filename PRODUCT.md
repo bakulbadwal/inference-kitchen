@@ -24,11 +24,11 @@ Existing tools are either engineer-grade simulators (CLI, config files) or commo
 
 ## Operating Context
 
-Used at a laptop in study sessions, and on a phone when shared. The steps are done in order (0–5, capstone, field test), but people also jump between them. Progress persists in localStorage.
+Used at a laptop in study sessions, and on a phone when shared. The steps are done in order (0–6, capstone, field test), but people also jump between them. Progress persists in localStorage.
 
 ## Capabilities and Constraints
 
-- Seven steps plus a field test. Every number comes from `js/core.js` (exact arithmetic) or `js/sim.js` (a deterministic teaching model); `ACCEPTANCE.md` lists the verified values.
+- Eight steps (0–6 and the capstone) plus a field test. Every number comes from `js/core.js` (exact arithmetic) or `js/sim.js` (a deterministic teaching model); `ACCEPTANCE.md` lists the verified values.
 - GPU specs come from the author's Hyperscale Ledger and must stay credited.
 - The honesty note (what's exact vs. a teaching model) must remain.
 - The kitchen analogy is the confirmed vocabulary: GPU = kitchen, HBM = counter, weights = recipe books, KV cache = order tickets, engine = head chef, batch = a table served together.

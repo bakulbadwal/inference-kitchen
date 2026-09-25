@@ -235,3 +235,19 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:#FFF1C6;
 @media(max-width:600px){footer{position:static;margin-top:8px}body{padding-bottom:0}nav{flex-wrap:nowrap;overflow-x:auto;padding:4px 2px 14px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}nav button{flex:none;scroll-snap-align:start}}
 
 .chartcap .sw{display:inline-block;width:12px;height:12px;border:1.5px solid var(--line);border-radius:2px;vertical-align:-1px;margin-right:4px}
+
+/* Step 6 · the sort board and the three-kitchen table */
+.sortb{display:grid;gap:8px;margin:12px 0}
+.srow{display:grid;grid-template-columns:minmax(150px,1fr) 2.2fr;gap:6px 12px;align-items:center;background:var(--sheet);border:2px solid var(--line);border-radius:8px;padding:9px 12px}
+.srow .sname b{display:block;font:700 18px var(--sign);color:var(--ink)}
+.srow .sname span{color:var(--soft);font:400 14.5px var(--hand)}
+.srow .opts{display:flex;gap:6px;flex-wrap:wrap}
+.srow .opts button{background:var(--sheet);border:2px solid var(--line);color:var(--ink);padding:5px 11px 6px;border-radius:8px;cursor:pointer;font:400 16px/1.2 var(--hand);box-shadow:1px 2px 0 var(--line)}
+.srow .opts button:hover:not(:disabled){background:#FFFBE6}
+.srow .opts button.right{background:#BFE3A6}
+.srow .opts button.wrong{background:#F4B7A7;text-decoration:line-through}
+.srow .opts button:disabled{cursor:default}
+.srow .sfact{grid-column:1/-1;display:none;font-size:14.5px;color:var(--soft)}
+.srow.done .sfact{display:block}
+.flow.f3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:760px){.srow{grid-template-columns:1fr}.flow.f3{grid-template-columns:1fr}}

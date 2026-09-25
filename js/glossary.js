@@ -25,5 +25,13 @@ window.IK_GLOSSARY = {
   slo: ["SLO (service-level objective)", "The latency target a service promises, e.g. first token under 2 s and gaps under 100 ms.", "The restaurant's 'hot food' promise."],
   nvlink: ["NVLink", "NVIDIA's GPU-to-GPU link inside one server: 450–900 GB/s each way. Fast enough for tensor parallelism.", "A short hallway between kitchens in one building."],
   ib: ["InfiniBand", "The network between servers: ~50 GB/s per 400 Gb/s card. An order of magnitude slower than NVLink.", "The street between buildings."],
+  sram: ["SRAM", "Memory built into the chip itself, right next to the multipliers. The fastest there is (hundreds of TB/s per chip), but it holds only megabytes, so a big model needs hundreds of chips.", "Recipe books already open on each cook's own station."],
+  lpddr: ["LPDDR (low-power DRAM)", "Ordinary memory soldered beside the chip in phones, laptops, Macs and robot computers, shared by the CPU, GPU and NPU. Roughly 0.1–1.2 TB/s: holds a lot, hauls slowly.", "The shared fridge down the hall."],
+  npu: ["NPU (neural processing unit)", "A small matrix engine inside a phone or laptop chip, sized for a few watts: 40–85 TOPS in 2026 parts. Runs small models all day and trains nothing.", "A food truck: small menu, always open."],
+  lpu: ["LPU (Groq's Language Processing Unit)", "A datacenter chip, NVIDIA's since December 2025, that keeps every weight in on-chip SRAM for speed. It isn't the chip in your phone; that's an NPU.", "A prep line with every recipe book already open on the counter."],
+  allreduce: ["All-reduce", "The step in training where every GPU averages its gradients with every other GPU before anyone moves on. It happens every step, so the whole cluster waits for the slowest link.", "Every table compares notes before the next course comes out."],
+  straggler: ["Straggler", "One slow GPU or flaky link in a synchronous job. Because every step waits for everyone, one straggler slows thousands of GPUs.", "The one slow table the whole banquet waits for."],
+  mfu: ["MFU (model FLOPs utilization)", "The share of a chip's peak math that training actually uses. Llama 3 405B ran at 38–43%; the rest went to waiting on memory, the network and stragglers.", "How much of the shift the stoves are actually cooking."],
+  flops: ["FLOPs vs FLOP/s", "FLOPs counts arithmetic steps (how much work); FLOP/s is a rate (how fast). Training takes about 6 × parameters × tokens FLOPs. Divide by the cluster's FLOP/s to get the calendar.", "The size of the banquet vs how fast the kitchen cooks."],
   canary: ["Canary deploy", "Send a small slice of traffic to a new version, watch it, then ramp up. The standard for inference because it needs no duplicate fleet.", "Let one table try the new menu first."]
 };

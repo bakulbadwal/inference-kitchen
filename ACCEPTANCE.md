@@ -48,3 +48,23 @@ Written before the build. Every criterion is checked in a real browser, with num
 - D5 Progress persists across reloads (localStorage, wrapped so it degrades safely).
 - D6 GPU numbers come from the Hyperscale Ledger and are credited on the page.
 - D7 A fresh-context adversarial review finds no open correctness issue. (Run 23 Sep 2026: 1 blocker + 7 major + 13 minor found; all fixed and re-verified.)
+
+## E. Step 6 · The other kitchens (added 24 Sep 2026, written before the build)
+
+Sources: the chip guide v4 (§4 NPU block, §6, §6a, §13), the Physical AI guide v3 (§2.4), the Llama 3 paper §3.3. H100 figures come from `js/gpus.js` (Hyperscale Ledger). Non-GPU kitchens are class-level figures, labelled on the page.
+
+| # | Check | Expected |
+|---|---|---|
+| E1 | Training FLOPs, 405B × 15.6T tokens, 6·N·D | 3.79e25 (Llama 3 states 3.8e25) |
+| E2 | Calendar days, 16,384 H100 (989.5 bf16 TFLOP/s), 41% MFU | 66.0 days (chip guide §13a: ~66) |
+| E3 | Training state at 16 bytes/param, 405B | 6.48 TB = 81 H100s just to hold it; serving at FP8 = 405 GB = 6 H100s |
+| E4 | Failure clock at 16,384 GPUs (1 per 50,000 GPU-hours) | one interruption every 3.05 h; ~519 over a 66-day run (Llama 3 saw 419 in 54 days) |
+| E5 | Stragglers, p = 1 in 10,000 per GPU per step, a slow table runs 1.5× | P(at least one slow table) = 80.6% at 16,384; expected step 1.40×; 66 → 92.6 days |
+| E6 | GPU power alone, 16,384 × 700 W | 11.47 MW |
+| E7 | Laptop NPU kitchen (32 GB shared LPDDR5X, 0.135 TB/s, 70% efficiency), 8B at 4-bit | 4 GB fits; 23.6 tok/s for one diner. 70B at 4-bit (35 GB) does not fit |
+| E8 | Jetson AGX Thor (128 GB, 0.273 TB/s), 70B at 4-bit | fits; 5.5 tok/s |
+| E9 | Mac Studio M5 Ultra (512 GB, 1.2 TB/s), 70B FP8 · H100, 70B FP8 | 12.0 tok/s · 33.5 tok/s (weights only, one diner) |
+| E10 | SRAM kitchens, 70B at FP8 (70 GB) | Groq 3 LPU (0.5 GB SRAM/chip): 140 chips · Cerebras CS-4 (~44 GB/wafer): 2 wafers; speed shown as the vendor's reported figure, never computed from bandwidth |
+| E11 | Sort board, 7 cards | SRAM: LPU, Cerebras · HBM: H100, TPU v7 · LPDDR: laptop NPU, Jetson Thor, M5 Ultra |
+| E12 | Teaching | two predict-then-reveal questions; "say it out loud" unlocks after both and 3 touches; nav shows step 6 between The Business and Capstone |
+| E13 | Works | zero console errors; no horizontal scroll at 375 px; progress persists; the D-series checks still pass for steps 0–5 |
