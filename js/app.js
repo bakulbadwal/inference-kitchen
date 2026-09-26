@@ -1024,6 +1024,7 @@
   }
 
   /* ---------------- boot ---------------- */
+  try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
   renderArt();
   qa(".kmap .k[data-i]").forEach(function (el) { el.innerHTML = ICONS[el.dataset.i] || ""; });
   buildNav();
@@ -1034,5 +1035,10 @@
   sections.forEach(function (s) { checkSay(s.id); });
   var start = (location.hash || "").replace("#", "");
   show($(start) && $(start).tagName === "SECTION" ? start : "s0");
+  // The URL hash matches a section id, so the browser performs its own fragment jump after load,
+  // after show() has already scrolled to the top. Undo it once the page has settled.
+  window.addEventListener("load", function () {
+    setTimeout(function () { window.scrollTo(0, 0); }, 0);
+  });
   window.IKApp = { cpEvaluate: cpEvaluate, s3params: s3params, show: show };
 })();
